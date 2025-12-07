@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "firebase": "^12.6.0",
     "framer-motion": "^12.23.25",
     "lottie-react": "^2.4.1",
-    "lucide": "^0.556.0",
+    "lucide-react": "^0.556.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.68.0",
     "react-router": "^7.10.1",
+    "sweetalert2": "^11.26.4",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {

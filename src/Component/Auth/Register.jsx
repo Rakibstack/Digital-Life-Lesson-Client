@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { motion } from "framer-motion";
-
+import useAuth from '../../Hooks/useAuth';
+import { Eye, EyeOff } from 'lucide-react';
+// import { Eye, EyeOff } from "lucide-react";
 const Register = () => {
+
+    const {createUser,logInWithGoogle} = useAuth();
+    const [show, setShow] = useState(false)
 
     const { register, handleSubmit, formState:{errors} } = useForm()
 
     const handleRegister = (data) => {
         console.log(data);
+        createUser(data.email,data.password)
+        .then(result => {
+            console.log(result);       
+        })
+        .catch(error => {
+            console.log(error);         
+        })
+    }
+    const HandleGoogle = () => {
+
+        logInWithGoogle()
     }
 
     return (
@@ -66,7 +82,7 @@ const Register = () => {
                             focus:ring-2 focus:ring-black duration-300"
                         />
                     </motion.div>
-                    {errors.name && <p className="text-red-500 mb-2">Name is Required</p>}
+                    {errors.name?.type === 'required' && <p className="text-red-500 mb-2">Name is Required</p>}
 
                     {/* Photo */}
                     <motion.div
@@ -82,7 +98,7 @@ const Register = () => {
                             focus:ring-2 focus:ring-black duration-300"
                         />
                     </motion.div>
-                    {errors.photo && <p className="text-red-500 mb-2">Photo is Required</p>}
+                    {errors.photo?.type === 'required' && <p className="text-red-500 mb-2">Photo is Required</p>}
 
                     {/* Email */}
                     <motion.div
@@ -99,24 +115,33 @@ const Register = () => {
                             focus:ring-2 focus:ring-black duration-300"
                         />
                     </motion.div>
-                    {errors.email && <p className="text-red-500 mb-2">Email is Required</p>}
+                    {errors.email?.type === 'required' && <p className="text-red-500 mb-2">Email is Required</p>}
 
                     {/* Password */}
                     <motion.div
                         initial={{opacity:0, x:25}}
                         animate={{opacity:1, x:0}}
                         transition={{delay:.65}}
-                        className="flex flex-col gap-2 mb-4"
+                        className="flex flex-col relative gap-2 mb-4"
                     >
                         <label className="text-sm font-medium">Password</label>
-                        <input type="password"
-                            {...register('password',{required:true})}
+                        <input type={show ? 'text' : 'password'}
+                            {...register('password',{
+                                required:true,
+                                minLength: 6,
+                                pattern: /^(?=.*[A-Z])(?=.*[a-z]).+$/
+
+                            })}
+                            
                             placeholder="Password (min. 6 character)"
                             className="border rounded-lg px-4 py-2 outline-none 
                             focus:ring-2 focus:ring-black duration-300"
                         />
+                        <button type='button' onClick={() => setShow(!show)} className=' absolute top-9 right-4'>{show ? <EyeOff size={22} /> : <Eye size={22} />}</button>
                     </motion.div>
-                    {errors.password && <p className="text-red-500 mb-2">Password is Required</p>}
+                    {errors.password?.type === 'required' && <p className="text-red-500 mb-2">Password is Required</p>}
+                    {errors.password?.type === "minLength" && <p className="text-red-500 mb-2">Password must be 6 characters or longer</p>}
+                    {errors.password?.type === 'pattern' && <p className="text-red-500 mb-2">Password must contain uppercase and lowercase letters.</p>}
 
                     {/* Submit Button */}
                     <motion.button
@@ -137,6 +162,8 @@ const Register = () => {
                         transition={{delay:.75}}
                         className="w-full py-2 border rounded-lg flex items-center 
                         justify-center gap-2 text-sm font-medium hover:bg-gray-100 duration-200"
+                        onClick={HandleGoogle}
+                        
                     >
                         <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5"/>
                         Sign in with Google
