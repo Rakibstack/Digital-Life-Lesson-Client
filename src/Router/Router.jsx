@@ -6,6 +6,9 @@ import Authlayout from "../LayOut/Authlayout";
 import Login from "../Component/Auth/Login";
 import Register from "../Component/Auth/Register";
 import ForgotPass from "../Component/Auth/ForgotPass";
+import PageNotFound from "../Component/Auth/PageNotFound/PageNotFound";
+import Upgrade from "../Component/Upgrade/Upgrade";
+import PrivateRoute from "../Component/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +19,12 @@ const router = createBrowserRouter([
             index: true,
             path: '/',
             element:<Home></Home>
+        },
+        {
+          path: '/upgrade',
+          element:<PrivateRoute>
+            <Upgrade></Upgrade>
+          </PrivateRoute>
         }
     ]
   },
@@ -36,6 +45,10 @@ const router = createBrowserRouter([
           element: <ForgotPass></ForgotPass>
         }
     ]
+  },
+  {
+    path:'*',
+    Component: PageNotFound
   }
 ]);
 

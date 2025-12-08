@@ -1,10 +1,23 @@
 import React from 'react';
+import HeroSlider from './Banner';
+import FeaturedLessons from './FeaturedLesson';
+import WhyLearningMatters from './LearnFormLife';
+import TopContributors from './TopContributors';
+import MostSavedLessons from './MostSavedLessons';
+
 
 const Home = () => {
 
     return (
         
-  <h2>this is home</h2>
+     <div> 
+      <HeroSlider></HeroSlider>
+      <FeaturedLessons></FeaturedLessons>
+      <WhyLearningMatters></WhyLearningMatters>
+      <TopContributors></TopContributors>
+      <MostSavedLessons></MostSavedLessons>
+       </div>
+
     );
 };
 

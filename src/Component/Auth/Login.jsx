@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { motion } from "framer-motion";
 import useAuth from '../../Hooks/useAuth';
 import { Eye, EyeOff } from 'lucide-react';
@@ -9,6 +9,10 @@ const Login = () => {
 
   const [error, setError] = useState(null)
    const [show, setShow] = useState(false)
+   const location = useLocation()
+   const navigate = useNavigate()
+   console.log(location);
+   
   
   const { register, handleSubmit, formState: { errors },reset } = useForm();
   const { loginUser, logInWithGoogle } = useAuth()
@@ -20,6 +24,7 @@ const Login = () => {
       .then(result => {
         console.log(result);
          reset()
+         navigate(location.state || '/')
       }).catch(error => {
         setError(error.message)
         console.log(error);
@@ -27,7 +32,9 @@ const Login = () => {
   }
 
   const HandleGoogle = () => {
+
     logInWithGoogle()
+     navigate(location.state?.form?.pathname || '/') 
   }
 
   return (
@@ -61,7 +68,7 @@ const Login = () => {
             <h2 className="text-2xl font-semibold">Sign in</h2>
             <p className="text-sm">
               Dont have an account?
-              <Link to='/auth/register' className="bg-gradient-to-r from-[#632EE3]  to-[#9F62F2] 
+              <Link state={location.state} to='/auth/register' className="bg-gradient-to-r from-[#632EE3]  to-[#9F62F2] 
               bg-clip-text text-transparent font-medium hover:underline ml-1">Join now</Link>
             </p>
           </motion.div>

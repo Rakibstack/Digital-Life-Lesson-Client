@@ -1,22 +1,51 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { motion } from "framer-motion";
 import useAuth from '../../Hooks/useAuth';
 import { Eye, EyeOff } from 'lucide-react';
+import axios from 'axios';
 // import { Eye, EyeOff } from "lucide-react";
 const Register = () => {
 
-    const {createUser,logInWithGoogle} = useAuth();
+    const {createUser,logInWithGoogle,updateUserProfile} = useAuth();
     const [show, setShow] = useState(false)
+    const location = useLocation()
+    const navigate = useNavigate()
+    // console.log(location);
+    
 
     const { register, handleSubmit, formState:{errors} } = useForm()
 
     const handleRegister = (data) => {
-        console.log(data);
+        // console.log(data);
+
+        const profileImage = data.photo[0]
+
         createUser(data.email,data.password)
-        .then(result => {
-            console.log(result);       
+        .then(() => {
+
+            // console.log(result); 
+            const formData = new FormData()
+            formData.append('image',profileImage)
+
+            axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOST}`,formData)
+            .then(res => {
+
+                // console.log(res.data);
+                const updateProfile = {
+                    displayName: data.name,
+                    photoURL: res.data.data.url
+                }
+                updateUserProfile(updateProfile)
+                .then(
+
+                )
+                .catch(error => console.log(error)
+                )             
+            })
+
+            navigate(location.state || '/')      
         })
         .catch(error => {
             console.log(error);         
@@ -25,12 +54,13 @@ const Register = () => {
     const HandleGoogle = () => {
 
         logInWithGoogle()
+     navigate(location.state || '/')   
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#f5f6fa] p-4 pt-8">
 
-            {/* 🔥 Main Card with Smooth Motion */}
+            {/* Main Card with Smooth Motion */}
             <motion.div
                 initial={{ opacity: 0, y: 30, scale: .95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -43,7 +73,7 @@ const Register = () => {
                 "
             >
 
-                {/* 🔥 Gradient Background (unchanged) */}
+                {/*  Gradient Background (unchanged) */}
                 <div className="absolute inset-0 rounded-2xl
                     bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 opacity-30 blur-[60px] -z-10">
                 </div>
