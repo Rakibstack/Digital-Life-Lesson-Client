@@ -5,40 +5,49 @@ import { motion } from "framer-motion";
 import useAuth from '../../Hooks/useAuth';
 import { Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
-// import { Eye, EyeOff } from "lucide-react";
+import useAxios from '../../Hooks/useAxios';
 const Register = () => {
 
     const {createUser,logInWithGoogle,updateUserProfile} = useAuth();
     const [show, setShow] = useState(false)
+    const axiosInstance = useAxios()
     const location = useLocation()
-    const navigate = useNavigate()
-    // console.log(location);
+    const navigate = useNavigate()   
     
+
 
     const { register, handleSubmit, formState:{errors} } = useForm()
 
     const handleRegister = (data) => {
-        // console.log(data);
 
         const profileImage = data.photo[0]
 
         createUser(data.email,data.password)
         .then(() => {
 
-            // console.log(result); 
             const formData = new FormData()
             formData.append('image',profileImage)
 
             axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOST}`,formData)
             .then(res => {
 
-                // console.log(res.data);
                 const updateProfile = {
                     displayName: data.name,
                     photoURL: res.data.data.url
                 }
+                const userInfo = {
+                    name:data.name,
+                    email:data.email,
+                    photo:res.data.data.url,
+                }
                 updateUserProfile(updateProfile)
                 .then(
+
+                axiosInstance.post('/users',userInfo)
+                .then(res => {
+                    console.log(res.data);
+                    
+                })
 
                 )
                 .catch(error => console.log(error)
@@ -51,9 +60,22 @@ const Register = () => {
             console.log(error);         
         })
     }
+
     const HandleGoogle = () => {
 
         logInWithGoogle()
+        .then(result => {
+
+            const user = result.user
+              const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL
+            };
+
+            axiosInstance.post('/users',userInfo)
+            .then()
+        })
      navigate(location.state || '/')   
     }
 

@@ -9,6 +9,8 @@ import ForgotPass from "../Component/Auth/ForgotPass";
 import PageNotFound from "../Component/Auth/PageNotFound/PageNotFound";
 import Upgrade from "../Component/Upgrade/Upgrade";
 import PrivateRoute from "../Component/PrivateRoute/PrivateRoute";
+import DashBoardLayout from "../LayOut/DashBoardLayout";
+import AddLesson from "../DashboardRelatedDesign/AddLesson";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,16 @@ const router = createBrowserRouter([
           element: <ForgotPass></ForgotPass>
         }
     ]
+  },
+  {
+     path: 'dashboard',
+     element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
+     children: [
+      {
+        path:'addlesson',
+        element: <AddLesson></AddLesson>
+      }
+     ]
   },
   {
     path:'*',

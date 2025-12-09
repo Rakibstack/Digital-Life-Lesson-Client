@@ -14,15 +14,17 @@ const Navber = () => {
     }
 
     const links = <>
-        <NavLink>Home</NavLink>
-        <NavLink>Add Lesson</NavLink>
-        <NavLink>My Lessons</NavLink>
+        <NavLink to='/'>Home</NavLink>
         <NavLink>Public Lessons</NavLink>
+       
+         <NavLink to='/dashboard/addlesson'>Add Lesson</NavLink>
+        <NavLink>My Lessons</NavLink>
         <NavLink to='/upgrade'>Upgrade</NavLink>
+       
     </>;
 
     return (
-        <div className="navbar bg-base-100 px-4 shadow-md">
+        <div className="navbar bg-base-100 px-4 ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
