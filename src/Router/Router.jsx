@@ -12,11 +12,13 @@ import PrivateRoute from "../Component/PrivateRoute/PrivateRoute";
 import DashBoardLayout from "../LayOut/DashBoardLayout";
 import AddLesson from "../DashboardRelatedDesign/AddLesson";
 import BrowsePublicLessons from "../DashboardRelatedDesign/PublicLesson";
+import Loading from "../Component/Loading/Loading";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
+    hydrateFallbackElement: <Loading></Loading>,
     children: [
         {
             index: true,

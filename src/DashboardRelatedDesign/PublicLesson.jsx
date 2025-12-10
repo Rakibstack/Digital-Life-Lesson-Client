@@ -1,27 +1,36 @@
 import { motion } from "framer-motion";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useUser from "../Hooks/useUser";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
-import Loading from "../Component/Loading/Loading";
+import { useEffect, useState } from "react";
+import useAxios from "../Hooks/useAxios";
+import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from "lucide-react";
 
 const BrowsePublicLessons = () => {
 
     const { isPremium,  } = useUser();
-    const axiosInstance = useAxiosSecure();
+    const axiosInstance = useAxios()
+    const [lessons,setLessons] = useState([])
+    const [totalLesson,setTotalLesson] = useState(0)
+    const [totalPage,setTotalPage] = useState(0)
+    const [currentPage,setCurrentPage] = useState(0)
 
-    const { data: lessons = [], isLoading } = useQuery({
-        queryKey: ["public-lessons"],
-        queryFn: async () => {
-            const res = await axiosInstance.get("/lessons/public");
-            return res.data;
-        }
-    });
+    const limit = 6;
 
-    if (isLoading){
-        return <Loading></Loading>
-    }
+    useEffect(() => {
 
+        axiosInstance.get(`/lessons/public?limit=${limit}&skip=${currentPage * limit}`)
+        .then(res => {
+            setLessons(res.data.result)
+            setTotalLesson(res.data.total)
+
+            const page = Math.ceil(res.data.total / limit)
+            setTotalPage(page)
+        })
+    },[currentPage,axiosInstance])
+   
+    
+    
+        
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">
             
@@ -33,6 +42,10 @@ const BrowsePublicLessons = () => {
             <p className="text-center mb-10 text-gray-600">
                 Explore real experiences, stories and wisdom shared by the community.
             </p>
+            <div className="py-5">
+                <h2 className="font-bold">{`(${totalLesson}) Lesson Found`}</h2>
+
+            </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -91,6 +104,20 @@ const BrowsePublicLessons = () => {
                         </motion.div>
                     );
                 })}
+            </div>
+
+            <div className=" flex justify-center items-center gap-5 mt-10">
+                {
+                    currentPage > 0 && <button onClick={() => setCurrentPage(currentPage -1)} className="btn"><ArrowLeft /> Prev</button>
+                }
+                {
+                    [...Array(totalPage).keys()].map(i => <button onClick={() => setCurrentPage(i)} className={`btn ${i === currentPage && 'btn-primary'}`}>{i}</button>
+                        
+                    )
+                }
+                 {
+                    currentPage < totalPage -1 && <button onClick={() => setCurrentPage(currentPage +1)} className="btn">Next<ArrowRight /></button>
+                }
             </div>
         </div>
     );

@@ -6,11 +6,29 @@ import { motion } from "framer-motion";
 
 const AddLesson = () => {
 
-    const { isPremium, name, email ,photo} = useUser();
+    const { isPremium, name, email, photo } = useUser();
     const axiosInstance = useAxiosSecure();
-    const { register, handleSubmit, reset } = useForm();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        clearErrors,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            title: "",
+            description: "",
+            category: "personal-growth",
+            tone: "motivational",
+            privacy: "public",
+            accessLevel: "free",
+        },
+    });
+    console.log(errors);
+
 
     const onSubmit = async (data) => {
+
         try {
             const lessonInfo = {
                 title: data.title,
@@ -32,7 +50,15 @@ const AddLesson = () => {
                     text: "Your Lesson has been Created!",
                     icon: "success",
                 });
-                reset();
+                reset({
+                    title: "",
+                    description: "",
+                    category: "personal-growth",
+                    tone: "motivational",
+                    privacy: "public",
+                    accessLevel: "free",
+                });
+                clearErrors()
             }
         } catch (err) {
             console.log(err);
