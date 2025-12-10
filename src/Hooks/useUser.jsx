@@ -15,9 +15,9 @@ const useUser = () => {
          return res.data
         },
     })
-    const {role,isPremium,name,email} = data
+    const {role,isPremium,name,email,photo} = data
 
-    return {role,isPremium,name,email};
+    return {role,isPremium,name,email,photo};
 };
 
 export default useUser;

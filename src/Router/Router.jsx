@@ -11,6 +11,7 @@ import Upgrade from "../Component/Upgrade/Upgrade";
 import PrivateRoute from "../Component/PrivateRoute/PrivateRoute";
 import DashBoardLayout from "../LayOut/DashBoardLayout";
 import AddLesson from "../DashboardRelatedDesign/AddLesson";
+import BrowsePublicLessons from "../DashboardRelatedDesign/PublicLesson";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
           element:<PrivateRoute>
             <Upgrade></Upgrade>
           </PrivateRoute>
+        },
+        {
+          path: '/public',
+          element: <BrowsePublicLessons></BrowsePublicLessons>
         }
     ]
   },

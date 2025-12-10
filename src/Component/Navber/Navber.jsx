@@ -15,7 +15,7 @@ const Navber = () => {
 
     const links = <>
         <NavLink to='/'>Home</NavLink>
-        <NavLink>Public Lessons</NavLink>
+        <NavLink to='/public'>Public Lessons</NavLink>
        
          <NavLink to='/dashboard/addlesson'>Add Lesson</NavLink>
         <NavLink>My Lessons</NavLink>
