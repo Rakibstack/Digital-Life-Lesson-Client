@@ -13,6 +13,9 @@ import DashBoardLayout from "../LayOut/DashBoardLayout";
 import AddLesson from "../DashboardRelatedDesign/AddLesson";
 import BrowsePublicLessons from "../DashboardRelatedDesign/PublicLesson";
 import Loading from "../Component/Loading/Loading";
+import PaymentLayout from "../LayOut/PaymentLayout";
+import PaymentSuccess from "../Component/Payment/PaymentSuccess";
+import PaymentCancel from "../Component/Payment/PaymentCancel";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,20 @@ const router = createBrowserRouter([
           path: '/public',
           element: <BrowsePublicLessons></BrowsePublicLessons>
         }
+    ]
+  },
+  {
+    path: 'payment',
+    element: <PaymentLayout></PaymentLayout>,
+    children: [
+      {
+        path: 'success',
+        element: <PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path: 'cancel',
+        element: <PaymentCancel></PaymentCancel>
+      }
     ]
   },
   {

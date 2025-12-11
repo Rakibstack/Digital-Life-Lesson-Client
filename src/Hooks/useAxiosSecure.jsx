@@ -36,7 +36,7 @@ const useAxiosSecure = () => {
         axiosInstance.interceptors.request.eject(requestInstance);
         axiosInstance.interceptors.response.eject(responseInstance)
     }
-  },[user?.accessToken,logout])
+  },[user,logout])
 
     return axiosInstance;
 };

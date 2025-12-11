@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import lifelesson from '../../assets/life-lesson.png';
 import useAuth from '../../Hooks/useAuth';
 import Loading from '../Loading/Loading';
+import useUser from '../../Hooks/useUser';
 
 const Navber = () => {
     const { user, logout, loading } = useAuth();
+    const{isPremium} = useUser()
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     if (loading) {
@@ -19,7 +21,26 @@ const Navber = () => {
        
          <NavLink to='/dashboard/addlesson'>Add Lesson</NavLink>
         <NavLink>My Lessons</NavLink>
-        <NavLink to='/upgrade'>Upgrade</NavLink>
+      {
+      user && (
+    isPremium ? (
+      <span className="px-3 py-1 rounded-full bg-yellow-400 text-black font-semibold text-sm shadow-md flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3l2.4 6.9H21l-5.4 3.9L17.4 21 12 17.4 6.6 21l1.8-7.2L3 9.9h6.6L12 3z" />
+        </svg>
+        Premium
+      </span>
+    ) : (
+      <NavLink
+        to="/upgrade"
+        className="px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200"
+      >
+        Upgrade
+      </NavLink>
+    )
+  )
+}
+
        
     </>;
 
