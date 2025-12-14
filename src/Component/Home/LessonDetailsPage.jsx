@@ -4,6 +4,7 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Loading from '../Loading/Loading';
 import useAuth from '../../Hooks/useAuth';
 import { motion } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 const LessonDetailsPage = () => {
 
@@ -12,7 +13,7 @@ const LessonDetailsPage = () => {
     const [author, setAuthor] = useState({});
     const [totalLesson, setTotalLesson] = useState(0)
     const [locked, setLocked] = useState(false);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
 
@@ -24,6 +25,11 @@ const LessonDetailsPage = () => {
     const [favoritesCount, setFavoritesCount] = useState(
         lesson.favoritesCount || 0
     )
+    // report state
+    const [isOpen, setIsOpen] = useState(false)
+    const [reason, setReason] = useState('Spam')
+    const [loading, setLoading] = useState(false)
+    const reasons = ['Spam', 'Offensive', 'Fake Info']
 
     useEffect(() => {
         fetchLesson();
@@ -46,7 +52,32 @@ const LessonDetailsPage = () => {
     }, [lesson._id, user, axiosSecure])
 
 
+ const onReport = async () => {
+    
+    if (!reason) return
+    setLoading(true)
+    try {
+      await axiosSecure.post('/reports', {lesson,  reason })
+      
+       Swal.fire({
+      title: "success!",
+      text: "Report submitted successfully",
+      icon: "success"
+    });
+      setIsOpen(false)
+    } catch (err) {
+      console.error(err)
+       Swal.fire({
+      title: "Report failed!",
+      text: `${err.response?.data?.message || 'Report failed'}`,
+      icon: "success"
+    });
+          setIsOpen(false)
 
+    } finally {
+      setLoading(false)
+    }
+  }
 
     const onLike = async () => {
         try {
@@ -55,7 +86,7 @@ const LessonDetailsPage = () => {
             )
 
             setLikedByMe(res.data.liked)
-           setLikesCount(prev => Math.max(0, prev + res.data.likesChange))
+            setLikesCount(prev => Math.max(0, prev + res.data.likesChange))
 
         } catch (error) {
             console.error(error)
@@ -69,12 +100,13 @@ const LessonDetailsPage = () => {
             )
 
             setFavoritedByMe(res.data.favorited)
-           setFavoritesCount(prev => Math.max(0, prev + res.data.countChange))
+            setFavoritesCount(prev => Math.max(0, prev + res.data.countChange))
 
         } catch (error) {
             console.error(error)
         }
     }
+
 
 
 
@@ -182,8 +214,50 @@ const LessonDetailsPage = () => {
 
                         {/* <motion.button whileTap={{ scale: 0.95 }} onClick={onShare} className="px-3 py-2 rounded-md border bg-white" aria-label="Share lesson">Share</motion.button> */}
 
-                        {/* <motion.button whileTap={{ scale: 0.95 }} onClick={onReport} className="ml-auto px-3 py-2 rounded-md text-sm border bg-white text-rose-600" aria-label="Report lesson">Report</motion.button> */}
+                        <motion.button whileTap={{ scale: 0.95 }} onClick={() => {
+                            setIsOpen(true)
+                            lesson._id
+                        }} className="ml-auto px-3 py-2 rounded-md text-sm border bg-white text-rose-600" aria-label="Report lesson">Report</motion.button>
                     </div>
+                     {/* Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <motion.div 
+            className="bg-white p-4 rounded-md w-80"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+          >
+            <h3 className="text-lg font-semibold mb-2">Report Lesson</h3>
+            
+            <select
+              className="w-full p-2 border rounded mb-4"
+              value={reason}
+              onChange={e => setReason(e.target.value)}
+            >
+              {reasons.map(r => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
+
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-3 py-1 rounded-md border"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-3 py-1 rounded-md bg-rose-600 text-white"
+                onClick={onReport}
+                disabled={loading}
+              >
+                {loading ? 'Reporting...' : 'Report'}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
                     {/* Comments placeholder */}
                     <section className="mt-8">
