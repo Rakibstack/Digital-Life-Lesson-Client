@@ -6,7 +6,7 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const Upgrade = () => {
 
-    const { role, isPremium,name,email } = useUser()
+    const {email } = useUser()
     const axiosSecure = useAxiosSecure();
 
     const HandlePayment = async () => {

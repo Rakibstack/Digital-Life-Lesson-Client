@@ -16,6 +16,7 @@ import Loading from "../Component/Loading/Loading";
 import PaymentLayout from "../LayOut/PaymentLayout";
 import PaymentSuccess from "../Component/Payment/PaymentSuccess";
 import PaymentCancel from "../Component/Payment/PaymentCancel";
+import LessonDetailsPage from "../Component/Home/LessonDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
         {
           path: '/public',
           element: <BrowsePublicLessons></BrowsePublicLessons>
+        },
+        {
+          path: '/lessons/:id',
+          element:<PrivateRoute>
+            <LessonDetailsPage></LessonDetailsPage>
+          </PrivateRoute>
         }
     ]
   },

@@ -101,7 +101,7 @@ const Navber = () => {
                                 >
                                     <div className="p-2 border-b font-semibold">{user.displayName}</div>
                                     <Link  className="block px-4 py-2 hover:bg-gray-100 transition">Profile</Link>
-                                    <Link className="block px-4 py-2 hover:bg-gray-100 transition">Dashboard</Link>
+                                    <Link to='/dashboard' className="block px-4 py-2 hover:bg-gray-100 transition">Dashboard</Link>
                                     <button
                                         onClick={() => {
                                             logout();
