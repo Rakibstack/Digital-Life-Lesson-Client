@@ -13,13 +13,13 @@ const LessonDetailsPage = () => {
     const [author, setAuthor] = useState({});
     const [totalLesson, setTotalLesson] = useState(0)
     const [locked, setLocked] = useState(false);
-    // const [loading, setLoading] = useState(true);
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
 
     // like function State
     const [likedByMe, setLikedByMe] = useState(false)
     const [likesCount, setLikesCount] = useState(lesson.likes || 0)
+
     // favoriteby me state
     const [favoritedByMe, setFavoritedByMe] = useState(false)
     const [favoritesCount, setFavoritesCount] = useState(
@@ -31,8 +31,16 @@ const LessonDetailsPage = () => {
     const [loading, setLoading] = useState(false)
     const reasons = ['Spam', 'Offensive', 'Fake Info']
 
+    // comment status
+    const [commentText, setCommentText] = useState('')
+    const [comments, setComments] = useState([])
+
+
     useEffect(() => {
-        fetchLesson();
+        if (user?.email) {
+            fetchLesson();
+        }
+
     }, [id]);
 
     // check like on load
@@ -52,32 +60,32 @@ const LessonDetailsPage = () => {
     }, [lesson._id, user, axiosSecure])
 
 
- const onReport = async () => {
-    
-    if (!reason) return
-    setLoading(true)
-    try {
-      await axiosSecure.post('/reports', {lesson,  reason })
-      
-       Swal.fire({
-      title: "success!",
-      text: "Report submitted successfully",
-      icon: "success"
-    });
-      setIsOpen(false)
-    } catch (err) {
-      console.error(err)
-       Swal.fire({
-      title: "Report failed!",
-      text: `${err.response?.data?.message || 'Report failed'}`,
-      icon: "success"
-    });
-          setIsOpen(false)
+    const onReport = async () => {
 
-    } finally {
-      setLoading(false)
+        if (!reason) return
+        setLoading(true)
+        try {
+            await axiosSecure.post('/reports', { lesson, reason })
+
+            Swal.fire({
+                title: "success!",
+                text: "Report submitted successfully",
+                icon: "success"
+            });
+            setIsOpen(false)
+        } catch (err) {
+            console.error(err)
+            Swal.fire({
+                title: "Report failed!",
+                text: `${err.response?.data?.message || 'Report failed'}`,
+                icon: "success"
+            });
+            setIsOpen(false)
+
+        } finally {
+            setLoading(false)
+        }
     }
-  }
 
     const onLike = async () => {
         try {
@@ -108,9 +116,9 @@ const LessonDetailsPage = () => {
     }
 
 
-
-
     const fetchLesson = async () => {
+
+        if (!user?.email) return;
 
         setLoading(true);
         try {
@@ -131,6 +139,28 @@ const LessonDetailsPage = () => {
             setLoading(false);
         }
     };
+
+    const handlePostComment = async () => {
+        
+        if (!commentText.trim()) return
+
+        try {
+            await axiosSecure.post('/comments', {
+                lessonId: lesson._id,
+                text: commentText
+            })
+
+            setCommentText('')
+
+            // refetch comments
+            const res = await axiosSecure.get(`/comments/${lesson._id}`)
+            setComments(res.data)
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
     // small helpers
     const formatDate = (d) => d ? new Date(d).toLocaleDateString() : '-';
     const short = (s, n = 120) => (s && s.length > n ? s.slice(0, n).trim() + '...' : s);
@@ -219,74 +249,103 @@ const LessonDetailsPage = () => {
                             lesson._id
                         }} className="ml-auto px-3 py-2 rounded-md text-sm border bg-white text-rose-600" aria-label="Report lesson">Report</motion.button>
                     </div>
-                     {/* Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-          <motion.div 
-            className="bg-white p-4 rounded-md w-80"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-          >
-            <h3 className="text-lg font-semibold mb-2">Report Lesson</h3>
-            
-            <select
-              className="w-full p-2 border rounded mb-4"
-              value={reason}
-              onChange={e => setReason(e.target.value)}
-            >
-              {reasons.map(r => (
-                <option key={r} value={r}>{r}</option>
-              ))}
-            </select>
+                    {/* Modal */}
+                    {isOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+                            <motion.div
+                                className="bg-white p-4 rounded-md w-80"
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.8, opacity: 0 }}
+                            >
+                                <h3 className="text-lg font-semibold mb-2">Report Lesson</h3>
 
-            <div className="flex justify-end gap-2">
-              <button
-                className="px-3 py-1 rounded-md border"
-                onClick={() => setIsOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-3 py-1 rounded-md bg-rose-600 text-white"
-                onClick={onReport}
-                disabled={loading}
-              >
-                {loading ? 'Reporting...' : 'Report'}
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
+                                <select
+                                    className="w-full p-2 border rounded mb-4"
+                                    value={reason}
+                                    onChange={e => setReason(e.target.value)}
+                                >
+                                    {reasons.map(r => (
+                                        <option key={r} value={r}>{r}</option>
+                                    ))}
+                                </select>
 
-                    {/* Comments placeholder */}
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        className="px-3 py-1 rounded-md border"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        className="px-3 py-1 rounded-md bg-rose-600 text-white"
+                                        onClick={onReport}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Reporting...' : 'Report'}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+
                     <section className="mt-8">
                         <h3 className="text-lg font-semibold">Comments</h3>
+
                         <div className="mt-3 space-y-3">
+
+                            {/* Comment Box */}
                             <div className="flex items-start space-x-3">
-                                <img src={user?.avatarUrl || '/avatar-placeholder.png'} alt="you" className="w-10 h-10 rounded-full" />
+                                <img
+                                    src={user?.photoURL}
+                                    alt="you"
+                                    className="w-10 h-10 rounded-full"
+                                />
+
                                 <div className="flex-1">
-                                    <textarea className="w-full p-3 rounded-md border" placeholder={user ? 'Write a comment...' : 'Please log in to comment'} disabled={!user} />
+                                    <textarea
+                                        className="w-full p-3 rounded-md border"
+                                        placeholder={user ? 'Write a comment...' : 'Please log in to comment'}
+                                        disabled={!user}
+                                        value={commentText}
+                                        onChange={e => setCommentText(e.target.value)}
+                                    />
+
                                     <div className="text-right mt-2">
-                                        <button className="px-4 py-2 rounded-md bg-slate-800 text-white text-sm" disabled={!user}>Post Comment</button>
+                                        <button
+                                            onClick={handlePostComment}
+                                            disabled={!user}
+                                            className="px-4 py-2 rounded-md bg-slate-800 text-white text-sm"
+                                        >
+                                            Post Comment
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* sample comments (static) */}
+                            {/* Comments List */}
                             <div className="space-y-2">
-                                <div className="bg-slate-50 p-3 rounded-lg">
-                                    <div className="text-sm font-medium">Amina</div>
-                                    <div className="text-sm text-slate-700">Loved the insight about being honest with yourself — this hit home.</div>
-                                </div>
-                                <div className="bg-slate-50 p-3 rounded-lg">
-                                    <div className="text-sm font-medium">Rafi</div>
-                                    <div className="text-sm text-slate-700">Powerful lesson — thank you for sharing.</div>
-                                </div>
+                                {comments.map(comment => (
+                                    <div key={comment._id} className="bg-slate-50 p-3 rounded-lg">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <img
+                                                src={comment.userPhoto}
+                                                className="w-6 h-6 rounded-full"
+                                            />
+                                            <div className="text-sm font-medium">
+                                                {comment.userName}
+                                            </div>
+                                        </div>
+                                        <div className="text-sm text-slate-700">
+                                            {comment.text}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
 
                         </div>
                     </section>
+
 
                 </div>
 
