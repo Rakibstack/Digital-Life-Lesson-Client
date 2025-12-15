@@ -33,6 +33,8 @@ const LessonDetailsPage = () => {
     const [favoritesCount, setFavoritesCount] = useState(
         lesson.favoritesCount || 0
     )
+         const shareUrl = window.location.href;
+
     // report state
     const [isOpen, setIsOpen] = useState(false)
     const [reason, setReason] = useState('Spam')
@@ -76,34 +78,29 @@ const LessonDetailsPage = () => {
         }
     }, [lesson._id, user, axiosSecure])
 
-  
 
-    const onReport = async () => {
+   
+    const fetchLesson = async () => {
 
-        if (!reason) return
-        setLoading(true)
+        setLoading(true);
         try {
-            await axiosSecure.post('/reports', { lesson, reason })
+            const res = await axiosSecure.get(`/lessons/${id}`);
+            console.log(res.data);
 
-            Swal.fire({
-                title: "success!",
-                text: "Report submitted successfully",
-                icon: "success"
-            });
-            setIsOpen(false)
-        } catch (err) {
-            console.error(err)
-            Swal.fire({
-                title: "Report failed!",
-                text: `${err.response?.data?.message || 'Report failed'}`,
-                icon: "success"
-            });
-            setIsOpen(false)
+            setLesson(res.data.lesson);
+            setAuthor(res.data.author);
+            setTotalLesson(res.data.totalLesson)
+
+        } catch (error) {
+            // Handle Premium Locked
+            if (error.response?.status === 403 && error.response.data.error === "premium_locked") {
+                setLocked(true);
+            }
 
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     const onLike = async () => {
         try {
@@ -133,31 +130,32 @@ const LessonDetailsPage = () => {
         }
     }
 
+     const onReport = async () => {
 
-    const fetchLesson = async () => {
-
-        if (!user?.accessToken) return;
-
-        setLoading(true);
+        if (!reason) return
+        setLoading(true)
         try {
-            const res = await axiosSecure.get(`/lessons/${id}`);
-            console.log(res.data);
+            await axiosSecure.post('/reports', { lesson, reason })
 
-            setLesson(res.data.lesson);
-            setAuthor(res.data.author);
-            setTotalLesson(res.data.totalLesson)
-
-        } catch (error) {
-            // Handle Premium Locked
-            if (error.response?.status === 403 && error.response.data.error === "premium_locked") {
-                setLocked(true);
-            }
+            Swal.fire({
+                title: "success!",
+                text: "Report submitted successfully",
+                icon: "success"
+            });
+            setIsOpen(false)
+        } catch (err) {
+            console.error(err)
+            Swal.fire({
+                title: "Report failed!",
+                text: `${err.response?.data?.message || 'Report failed'}`,
+                icon: "success"
+            });
+            setIsOpen(false)
 
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
-     const shareUrl = window.location.href;
+    }
 
     const handlePostComment = async () => {
 

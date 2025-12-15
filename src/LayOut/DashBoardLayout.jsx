@@ -13,7 +13,9 @@ const DashBoardLayout = () => {
         {/* Sidebar toggle icon */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
       </label>
-      <div className="px-4">Navbar Title</div>
+      <div> <h2 className='font-extrabold hidden sm:block text-3xl'>
+                        Digital Life <span className='bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent'>Lesson</span>
+                    </h2></div>
     </nav>
     {/* Page content here */}
     <div className="p-4">
@@ -35,17 +37,18 @@ const DashBoardLayout = () => {
           </Link>
         </li>
         <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add lesson">
+          <Link to='/dashboard/addlesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add lesson">
            <BetweenVerticalEnd size={19} />
             <span className="is-drawer-close:hidden">Add Lesson</span>
-          </button>
+          </Link>
         </li>
         <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My lesson">
-            <BookOpen size={19} />
+          <Link to='/dashboard/mylesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My lesson">
+           <BetweenVerticalEnd size={19} />
             <span className="is-drawer-close:hidden">My Lesson</span>
-          </button>
+          </Link>
         </li>
+       
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Favorite lesson">
             <HeartPlus size={19} />

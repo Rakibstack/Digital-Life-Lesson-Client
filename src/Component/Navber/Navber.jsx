@@ -20,7 +20,8 @@ const Navber = () => {
         <NavLink to='/public'>Public Lessons</NavLink>
        
          <NavLink to='/dashboard/addlesson'>Add Lesson</NavLink>
-        <NavLink>My Lessons</NavLink>
+         <NavLink to='/dashboard/mylesson'>MY Lesson</NavLink>
+        
       {
       user && (
     isPremium ? (

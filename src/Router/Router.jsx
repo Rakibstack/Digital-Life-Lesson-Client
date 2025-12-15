@@ -18,6 +18,7 @@ import PaymentSuccess from "../Component/Payment/PaymentSuccess";
 import PaymentCancel from "../Component/Payment/PaymentCancel";
 import LessonDetailsPage from "../Component/Home/LessonDetailsPage";
 import AuthorDetails from "../Component/Home/AuthorDetails";
+import MyLesson from "../DashboardRelatedDesign/MyLesson";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path:'addlesson',
         element: <AddLesson></AddLesson>
+      },
+      {
+        path: 'mylesson',
+        element: <MyLesson></MyLesson>
       }
      ]
   },
