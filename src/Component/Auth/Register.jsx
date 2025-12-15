@@ -8,75 +8,75 @@ import axios from 'axios';
 import useAxios from '../../Hooks/useAxios';
 const Register = () => {
 
-    const {createUser,logInWithGoogle,updateUserProfile} = useAuth();
+    const { createUser, logInWithGoogle, updateUserProfile } = useAuth();
     const [show, setShow] = useState(false)
     const axiosInstance = useAxios()
     const location = useLocation()
-    const navigate = useNavigate()   
-    
+    const navigate = useNavigate()
 
 
-    const { register, handleSubmit, formState:{errors} } = useForm()
+
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     const handleRegister = (data) => {
 
         const profileImage = data.photo[0]
 
-        createUser(data.email,data.password)
-        .then(() => {
+        createUser(data.email, data.password)
+            .then ( async () => {
 
-            const formData = new FormData()
-            formData.append('image',profileImage)
+                const formData = new FormData()
+                formData.append('image', profileImage)
 
-            axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOST}`,formData)
-            .then(res => {
+              await  axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOST}`, formData)
+                    .then(res => {
 
-                const updateProfile = {
-                    displayName: data.name,
-                    photoURL: res.data.data.url
-                }
-                const userInfo = {
-                    name:data.name,
-                    email:data.email,
-                    photo:res.data.data.url,
-                }
-                updateUserProfile(updateProfile)
-                .then(
+                        // console.log(res.data);             
+                        const updateProfile = {
+                            displayName: data.name,
+                            photoURL: res.data.data.url
+                        }
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email,
+                            photo: res.data.data.url,
+                        }
+                        updateUserProfile(updateProfile)
+                            .then( async () => {
 
-                axiosInstance.post('/users',userInfo)
-                .then(res => {
-                    console.log(res.data);
-                    
-                })
+                             await   axiosInstance.post('/users', userInfo)
+                                    .then(() => {
+                                        // console.log(res.data);
+                                    })
+                            }
+                            )
+                            .catch(error => console.log(error)
+                            )
+                    })
 
-                )
-                .catch(error => console.log(error)
-                )             
+                navigate(location.state || '/')
             })
-
-            navigate(location.state || '/')      
-        })
-        .catch(error => {
-            console.log(error);         
-        })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const HandleGoogle = () => {
 
         logInWithGoogle()
-        .then(result => {
+            .then(result => {
 
-            const user = result.user
-              const userInfo = {
-                name: user.displayName,
-                email: user.email,
-                photo: user.photoURL
-            };
+                const user = result.user
+                const userInfo = {
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL
+                };
 
-            axiosInstance.post('/users',userInfo)
-            .then()
-        })
-     navigate(location.state || '/')   
+                axiosInstance.post('/users', userInfo)
+                    .then()
+            })
+        navigate(location.state || '/')
     }
 
     return (
@@ -104,9 +104,9 @@ const Register = () => {
 
                     {/* Header Motion */}
                     <motion.div
-                        initial={{opacity:0, y:-15}}
-                        animate={{opacity:1, y:0}}
-                        transition={{delay:.3}}
+                        initial={{ opacity: 0, y: -15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: .3 }}
                         className="flex justify-between items-center mb-6"
                     >
                         <h2 className="text-2xl font-semibold">Sign up</h2>
@@ -121,14 +121,14 @@ const Register = () => {
 
                     {/* Name Input */}
                     <motion.div
-                        initial={{opacity:0, x:-25}}
-                        animate={{opacity:1, x:0}}
-                        transition={{delay:.35}}
+                        initial={{ opacity: 0, x: -25 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: .35 }}
                         className="flex flex-col gap-2 mb-5"
                     >
                         <label className="text-sm font-medium">Name</label>
                         <input type="text"
-                            {...register('name',{required:true})}
+                            {...register('name', { required: true })}
                             placeholder="Type Your Name"
                             className="border rounded-lg px-4 py-2 outline-none 
                             focus:ring-2 focus:ring-black duration-300"
@@ -138,14 +138,14 @@ const Register = () => {
 
                     {/* Photo */}
                     <motion.div
-                        initial={{opacity:0, x:25}}
-                        animate={{opacity:1, x:0}}
-                        transition={{delay:.45}}
+                        initial={{ opacity: 0, x: 25 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: .45 }}
                         className="flex flex-col gap-2 mb-5"
                     >
                         <label className="text-sm font-medium">Photo</label>
                         <input type="file"
-                            {...register('photo',{required:true})}
+                            {...register('photo', { required: true })}
                             className="border rounded-lg px-4 py-2 outline-none 
                             focus:ring-2 focus:ring-black duration-300"
                         />
@@ -154,14 +154,14 @@ const Register = () => {
 
                     {/* Email */}
                     <motion.div
-                        initial={{opacity:0, x:-25}}
-                        animate={{opacity:1, x:0}}
-                        transition={{delay:.55}}
+                        initial={{ opacity: 0, x: -25 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: .55 }}
                         className="flex flex-col gap-2 mb-5"
                     >
                         <label className="text-sm font-medium">Email</label>
                         <input type="email"
-                            {...register('email',{required:true})}
+                            {...register('email', { required: true })}
                             placeholder="Email address"
                             className="border rounded-lg px-4 py-2 outline-none 
                             focus:ring-2 focus:ring-black duration-300"
@@ -171,20 +171,20 @@ const Register = () => {
 
                     {/* Password */}
                     <motion.div
-                        initial={{opacity:0, x:25}}
-                        animate={{opacity:1, x:0}}
-                        transition={{delay:.65}}
+                        initial={{ opacity: 0, x: 25 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: .65 }}
                         className="flex flex-col relative gap-2 mb-4"
                     >
                         <label className="text-sm font-medium">Password</label>
                         <input type={show ? 'text' : 'password'}
-                            {...register('password',{
-                                required:true,
+                            {...register('password', {
+                                required: true,
                                 minLength: 6,
                                 pattern: /^(?=.*[A-Z])(?=.*[a-z]).+$/
 
                             })}
-                            
+
                             placeholder="Password (min. 6 character)"
                             className="border rounded-lg px-4 py-2 outline-none 
                             focus:ring-2 focus:ring-black duration-300"
@@ -197,7 +197,7 @@ const Register = () => {
 
                     {/* Submit Button */}
                     <motion.button
-                        whileTap={{scale:.95}}
+                        whileTap={{ scale: .95 }}
                         className="w-full py-2 bg-black text-white rounded-lg 
                         text-sm font-medium"
                     >
@@ -209,15 +209,15 @@ const Register = () => {
 
                     {/* Google Login */}
                     <motion.button
-                        initial={{opacity:0}}
-                        animate={{opacity:1}}
-                        transition={{delay:.75}}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: .75 }}
                         className="w-full py-2 border rounded-lg flex items-center 
                         justify-center gap-2 text-sm font-medium hover:bg-gray-100 duration-200"
                         onClick={HandleGoogle}
-                        
+
                     >
-                        <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5"/>
+                        <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5" />
                         Sign in with Google
                     </motion.button>
 

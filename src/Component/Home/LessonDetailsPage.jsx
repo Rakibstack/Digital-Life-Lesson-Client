@@ -5,6 +5,14 @@ import Loading from '../Loading/Loading';
 import useAuth from '../../Hooks/useAuth';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
+import {
+  FacebookShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
+  FacebookIcon,
+  WhatsappIcon,
+  LinkedinIcon
+} from 'react-share'
 
 const LessonDetailsPage = () => {
 
@@ -35,12 +43,21 @@ const LessonDetailsPage = () => {
     const [commentText, setCommentText] = useState('')
     const [comments, setComments] = useState([])
 
+    // releted lesson
+    const [relatedLessons, setRelatedLessons] = useState([])
+    const [showAll, setShowAll] = useState(false)
 
     useEffect(() => {
-        if (user?.email) {
-            fetchLesson();
+        const fetchRelated = async () => {
+            const res = await axiosSecure.get(`/lessons/${lesson._id}/related`)
+            setRelatedLessons(res.data)
         }
+        fetchRelated()
+    }, [lesson._id, axiosSecure])
 
+
+    useEffect(() => {
+        fetchLesson();
     }, [id]);
 
     // check like on load
@@ -59,6 +76,7 @@ const LessonDetailsPage = () => {
         }
     }, [lesson._id, user, axiosSecure])
 
+  
 
     const onReport = async () => {
 
@@ -118,7 +136,7 @@ const LessonDetailsPage = () => {
 
     const fetchLesson = async () => {
 
-        if (!user?.email) return;
+        if (!user?.accessToken) return;
 
         setLoading(true);
         try {
@@ -139,9 +157,10 @@ const LessonDetailsPage = () => {
             setLoading(false);
         }
     };
+     const shareUrl = window.location.href;
 
     const handlePostComment = async () => {
-        
+
         if (!commentText.trim()) return
 
         try {
@@ -160,6 +179,7 @@ const LessonDetailsPage = () => {
             console.error(err)
         }
     }
+    
 
     // small helpers
     const formatDate = (d) => d ? new Date(d).toLocaleDateString() : '-';
@@ -188,7 +208,7 @@ const LessonDetailsPage = () => {
 
                 <div className={`h-48 md:h-56 flex items-center justify-center bg-gradient-to-r from-slate-50 to-white ${locked ? 'filter blur-sm' : ''}`}>
                     <div className="text-center">
-                        <h1 className="text-2xl md:text-3xl font-bold">{lesson.title}</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent ">{lesson.title}</h1>
                         <p className="text-sm text-slate-500 mt-2">{lesson.category} • {lesson.tone}</p>
                     </div>
                 </div>
@@ -213,10 +233,6 @@ const LessonDetailsPage = () => {
                         </div>
                     </div>
 
-                    {/* Content
-          <article className={`prose max-w-none ${locked ? 'blur-sm pointer-events-none select-none' : ''}`} aria-hidden={locked}>
-            <div dangerouslySetInnerHTML={{ __html: content }} />
-          </article> */}
 
                     Interaction Buttons
                     <div className="mt-6 flex items-center gap-3">
@@ -241,6 +257,19 @@ const LessonDetailsPage = () => {
                             <span aria-hidden>{favoritedByMe ? '🔖' : '📄'}</span>
                             <span className="text-sm font-medium">{Number(favoritesCount).toLocaleString()}</span>
                         </motion.button>
+                        <div className="flex items-center gap-2">
+                            <FacebookShareButton url={shareUrl} quote={lesson.title}>
+                                <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+
+                            <WhatsappShareButton url={shareUrl} title={lesson.title}>
+                                <WhatsappIcon size={32} round />
+                            </WhatsappShareButton>
+
+                            <LinkedinShareButton url={shareUrl} title={lesson.title}>
+                                <LinkedinIcon size={32} round />
+                            </LinkedinShareButton>
+                        </div>
 
                         {/* <motion.button whileTap={{ scale: 0.95 }} onClick={onShare} className="px-3 py-2 rounded-md border bg-white" aria-label="Share lesson">Share</motion.button> */}
 
@@ -358,33 +387,41 @@ const LessonDetailsPage = () => {
                             <div>
                                 <div className="font-semibold">{author.name}</div>
                                 <div className="text-sm text-slate-500">{totalLesson} lessons</div>
-                                <button className="mt-2 text-sm underline">View all lessons</button>
+                                <Link to={`/author/${author.email}`} className="mt-2 text-sm underline">View all lessons</Link>
                             </div>
                         </div>
 
-                        {/* Quick Stats
-            <div className="bg-white rounded-2xl shadow p-4">
-              <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Likes</span><span className="font-medium">{Number(likesCount).toLocaleString()}</span></div>
-              <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Favorites</span><span className="font-medium">{Number(favoritesCount).toLocaleString()}</span></div>
-              <div className="flex items-center justify-between text-sm text-slate-600"><span>Views</span><span className="font-medium">{Number(views).toLocaleString()}</span></div>
-            </div> */}
+                        Quick Stats
+                        <div className="bg-white rounded-2xl shadow p-4">
+                            <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Likes</span><span className="font-medium">{Number(likesCount).toLocaleString()}</span></div>
+                            <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Favorites</span><span className="font-medium">{Number(favoritesCount).toLocaleString()}</span></div>
+                            <div className="flex items-center justify-between text-sm text-slate-600"><span>Views</span><span className="font-medium">{Number(views).toLocaleString()}</span></div>
+                        </div>
 
                         {/* Recommendations (static placeholders) */}
                         <div className="bg-white rounded-2xl shadow p-4">
                             <h4 className="font-semibold mb-3">Related Lessons</h4>
                             <div className="space-y-3">
-                                {[1, 2, 3].map(i => (
-                                    <div key={i} className="flex items-center gap-3">
+                                {(showAll ? relatedLessons : relatedLessons.slice(0, 3)).map((rel) => (
+                                    <div key={rel._id} className="flex items-center gap-3">
                                         <div className="w-12 h-12 bg-slate-100 rounded-md flex-none" />
                                         <div>
-                                            <div className="text-sm font-medium">{short(lesson.title + ' — related ' + i, 48)}</div>
-                                            <div className="text-xs text-slate-500">{lesson.category} • {lesson.tone}</div>
+                                            <div className="text-sm font-medium">{short(rel.title, 48)}</div>
+                                            <div className="text-xs text-slate-500">{rel.category} • {rel.tone}</div>
                                         </div>
                                     </div>
                                 ))}
-                                <button className="mt-3 w-full text-sm py-2 rounded-md border">Show more</button>
+                                {relatedLessons.length > 3 && (
+                                    <button
+                                        className="mt-3 w-full text-sm py-2 rounded-md border"
+                                        onClick={() => setShowAll(prev => !prev)}
+                                    >
+                                        {showAll ? 'Show less' : 'Show more'}
+                                    </button>
+                                )}
                             </div>
                         </div>
+
 
                     </div>
                 </aside>

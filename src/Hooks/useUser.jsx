@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useUser = () => {
 
-    const { user,loading } = useAuth()
+    const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
   
     const {data = {} ,isLoading} = useQuery({

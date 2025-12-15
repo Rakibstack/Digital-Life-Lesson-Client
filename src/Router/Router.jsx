@@ -17,6 +17,7 @@ import PaymentLayout from "../LayOut/PaymentLayout";
 import PaymentSuccess from "../Component/Payment/PaymentSuccess";
 import PaymentCancel from "../Component/Payment/PaymentCancel";
 import LessonDetailsPage from "../Component/Home/LessonDetailsPage";
+import AuthorDetails from "../Component/Home/AuthorDetails";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
           element:<PrivateRoute>
             <LessonDetailsPage></LessonDetailsPage>
           </PrivateRoute>
+        },
+        {
+          path: '/author/:email',
+          element: <PrivateRoute><AuthorDetails></AuthorDetails> </PrivateRoute>
         }
     ]
   },
