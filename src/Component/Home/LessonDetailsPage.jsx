@@ -222,7 +222,7 @@ const LessonDetailsPage = () => {
                     <div className="flex items-center justify-between mb-4">
                         <div className="text-sm text-slate-500">
                             <div>Created: <span className="font-medium text-slate-700">{formatDate(author.createAt)}</span></div>
-                            {/* <div>Updated: <span className="font-medium text-slate-700">{formatDate(updatedAt)}</span></div> */}
+                            <div>Updated: <span className="font-medium text-slate-700">{formatDate(lesson.updatedAt)}</span></div>
                             <div>Visibility: Public</div>
                         </div>
                         <div className="text-sm text-slate-500 text-right">
@@ -269,7 +269,7 @@ const LessonDetailsPage = () => {
                             </LinkedinShareButton>
                         </div>
 
-                        {/* <motion.button whileTap={{ scale: 0.95 }} onClick={onShare} className="px-3 py-2 rounded-md border bg-white" aria-label="Share lesson">Share</motion.button> */}
+        
 
                         <motion.button whileTap={{ scale: 0.95 }} onClick={() => {
                             setIsOpen(true)

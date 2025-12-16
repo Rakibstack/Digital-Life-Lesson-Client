@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Edit, Trash2 } from 'lucide-react';
 import useAuth from '../Hooks/useAuth';
@@ -8,12 +8,16 @@ import { useQuery } from '@tanstack/react-query';
 import DynamicLoading from '../Component/Loading/Loading';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import { useForm } from 'react-hook-form';
 
 const MyLesson = () => {
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const { isPremium } = useUser();
+    const modalRef = useRef()
+    const [lessonId, setLessonId] = useState(null)
+    const { register, handleSubmit, reset} = useForm()
 
     const { data: myLesson = [], isLoading, refetch } = useQuery({
         queryKey: ['mylesson', user?.email],
@@ -24,17 +28,19 @@ const MyLesson = () => {
         },
     });
 
-    const handleVisibilityChange =  (id, visibility) => {
+
+
+    const handleVisibilityChange = (id, visibility) => {
         try {
-             axiosSecure.patch(`/lessons/visibility/${id}`, {
+            axiosSecure.patch(`/mylessons/visibility/${id}`, {
                 visibility: visibility
             }).then(res => {
-                if(res.data.modifiedCount){
-                   Swal.fire({
-                    title: "Success!",
-                    text: "Your visibility Has Been Updated",
-                    icon: "success"
-                });  
+                if (res.data.modifiedCount) {
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Your visibility Has Been Updated",
+                        icon: "success"
+                    });
                 }
             }
             )
@@ -45,7 +51,7 @@ const MyLesson = () => {
         }
     }
 
-    const HandleDelete =  (id) => {
+    const HandleDelete = (id) => {
 
         Swal.fire({
             title: "Are you sure?",
@@ -55,21 +61,55 @@ const MyLesson = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then( (result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-               axiosSecure.delete(`/lessons/delete/${id}`)
-               .then((res) => {
-                if(res.data.deletedCount){
-                    Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-                 refetch()
-                }           
-               })
+                axiosSecure.delete(`/mylessons/delete/${id}`)
+                    .then((res) => {
+                        if (res.data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            refetch()
+                        }
+                    })
             }
         });
+    }
+    const HandleModal = (id) => {
+        setLessonId(id)
+        modalRef.current.showModal()
+    }
+    const HandleClose = () => {
+        modalRef.current.close()
+    }
+    const onSubmitForm = (data) => {
+
+        const { title, description, category,
+            privacy, accessLevel, tone } = data
+
+        const updateInfo = {
+            title,
+            description,
+            category,
+            privacy,
+            accessLevel,
+            tone
+        }
+        axiosSecure.patch(`/mylesson/update/${lessonId}`, updateInfo)
+            .then(res => {
+                if (res.data.modifiedCount ) {
+                    reset()
+                     Swal.fire({
+                                title: "successful!",
+                                text: "Lesson updated successfully.",
+                                icon: "success"
+                            });
+                    refetch()
+                    modalRef.current.close()
+                }
+            })
     }
 
     if (isLoading) {
@@ -158,7 +198,7 @@ const MyLesson = () => {
                                         <Eye size={16} />
                                     </Link>
 
-                                    <button className="btn btn-sm btn-outline btn-info" title="Update">
+                                    <button onClick={() => HandleModal(lesson._id)} className="btn btn-sm btn-outline btn-info" title="Update">
                                         <Edit size={16} />
                                     </button>
 
@@ -172,16 +212,114 @@ const MyLesson = () => {
                 </table>
             </div>
 
-            {/* Delete confirmation modal (UI only) */}
-            <dialog className="modal" id="delete_modal">
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Delete Lesson</h3>
-                    <p className="py-4">
-                        Are you sure you want to permanently delete this lesson?
-                    </p>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, type: "spring" }}
+                        className="max-w-xl mx-auto bg-white/80 backdrop-blur-md 
+                       border border-gray-200 shadow-2xl rounded-2xl 
+                       p-10 mt-10"
+                    >
+                        <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r 
+                           from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                            Update Your Lesson
+                        </h2>
+
+                        <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-5">
+
+                            <motion.input
+                                whileFocus={{ scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 200 }}
+                                {...register("title", { required: true })}
+                                placeholder="Lesson Title"
+                                className="w-full p-3 border border-gray-300 rounded-lg focus:border-purple-500 outline-none"
+                            />
+
+                            <motion.textarea
+                                whileFocus={{ scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 200 }}
+                                {...register("description", { required: true })}
+                                rows={5}
+                                placeholder="Write your full life lesson or story..."
+                                className="w-full p-3 border border-gray-300 rounded-lg focus:border-purple-500 outline-none resize-none"
+                            ></motion.textarea>
+
+                            <motion.select
+                                whileHover={{ scale: 1.02 }}
+                                {...register("category")}
+                                className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                            >
+                                <option value="personal-growth">Personal Growth</option>
+                                <option value="career">Career</option>
+                                <option value="relationships">Relationships</option>
+                                <option value="mindset">Mindset</option>
+                                <option value="mistake-learned">Mistakes Learned</option>
+                            </motion.select>
+
+                            <motion.select
+                                whileHover={{ scale: 1.02 }}
+                                {...register("tone")}
+                                className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                            >
+                                <option value="motivational">Motivational</option>
+                                <option value="sad">Sad</option>
+                                <option value="realization">Realization</option>
+                                <option value="gratitude">Gratitude</option>
+                            </motion.select>
+
+                            <motion.select
+                                whileHover={{ scale: 1.02 }}
+                                {...register("privacy")}
+                                className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                            >
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </motion.select>
+
+                            <motion.select
+                                whileHover={{ scale: 1.02 }}
+                                {...register("accessLevel")}
+                                disabled={!isPremium}
+                                className="w-full p-3 border rounded-lg outline-none focus:border-purple-500 cursor-pointer"
+                            >
+                                <option value="free">Free</option>
+                                <option value="premium">Premium</option>
+                            </motion.select>
+
+                            {!isPremium && (
+                                <p className="text-red-500 text-sm">Upgrade to Premium to create premium lessons</p>
+                            )}
+
+                            <div className='flex gap-5'>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full py-3 text-lg font-semibold rounded-lg 
+                               bg-gradient-to-r from-purple-600 to-blue-600 text-white 
+                               shadow-md hover:shadow-xl transition"
+                                >
+                                    Update Lesson ✍️
+                                </motion.button>
+                                <motion.button
+                                    onClick={HandleClose}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full py-3 text-lg font-semibold rounded-lg 
+                               bg-gradient-to-r from-purple-600 to-blue-600 text-white 
+                               shadow-md hover:shadow-xl transition"
+                                >
+                                    Close
+                                </motion.button>
+                            </div>
+                        </form>
+                    </motion.div>
                     <div className="modal-action">
-                        <button className="btn btn-error">Delete</button>
-                        <button className="btn">Cancel</button>
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                        </form>
                     </div>
                 </div>
             </dialog>
