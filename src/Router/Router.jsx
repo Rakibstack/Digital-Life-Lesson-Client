@@ -19,6 +19,7 @@ import PaymentCancel from "../Component/Payment/PaymentCancel";
 import LessonDetailsPage from "../Component/Home/LessonDetailsPage";
 import AuthorDetails from "../Component/Home/AuthorDetails";
 import MyLesson from "../DashboardRelatedDesign/MyLesson";
+import FavoriteLesson from "../DashboardRelatedDesign/FavoriteLesson";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: 'mylesson',
         element: <MyLesson></MyLesson>
+      },
+      {
+        path: 'favoriteLesson',
+        element: <FavoriteLesson></FavoriteLesson>
       }
      ]
   },

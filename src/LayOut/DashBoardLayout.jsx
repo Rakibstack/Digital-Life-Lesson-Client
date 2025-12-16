@@ -50,10 +50,10 @@ const DashBoardLayout = () => {
         </li>
        
         <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Favorite lesson">
+          <Link to='/dashboard/favoriteLesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Favorite lesson">
             <HeartPlus size={19} />
             <span className="is-drawer-close:hidden">Favorite Lesson</span>
-          </button>
+          </Link>
         </li>
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Profile">
