@@ -39,6 +39,7 @@ const BrowsePublicLessons = () => {
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">
+            <title>Public-Lesson</title>
             <h1 className="text-4xl font-bold text-center mb-3 
                      bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
                 Browse Public Life Lessons 🌍

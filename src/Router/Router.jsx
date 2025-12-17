@@ -20,6 +20,7 @@ import LessonDetailsPage from "../Component/Home/LessonDetailsPage";
 import AuthorDetails from "../Component/Home/AuthorDetails";
 import MyLesson from "../DashboardRelatedDesign/MyLesson";
 import FavoriteLesson from "../DashboardRelatedDesign/FavoriteLesson";
+import MyProfile from "../DashboardRelatedDesign/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: 'favoriteLesson',
         element: <FavoriteLesson></FavoriteLesson>
+      },
+      {
+        path: 'myprofile',
+        element: <MyProfile></MyProfile>
       }
      ]
   },

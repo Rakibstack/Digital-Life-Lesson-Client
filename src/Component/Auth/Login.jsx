@@ -4,37 +4,44 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { motion } from "framer-motion";
 import useAuth from '../../Hooks/useAuth';
 import { Eye, EyeOff } from 'lucide-react';
+import DynamicLoading from '../Loading/Loading';
 
 const Login = () => {
 
   const [error, setError] = useState(null)
-   const [show, setShow] = useState(false)
-   const location = useLocation()
-   const navigate = useNavigate()
-   console.log(location);
-   
-  
-  const { register, handleSubmit, formState: { errors },reset } = useForm();
-  const { loginUser, logInWithGoogle } = useAuth()
+  const [show, setShow] = useState(false)
+  // const [Loading, setLoading] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  const handleLogin = (data) => {
 
-     setError('')
-    loginUser(data.email, data.password)
-      .then(result => {
-        console.log(result);
-         reset()
-         navigate(location.state || '/')
-      }).catch(error => {
-        setError(error.message)
-        console.log(error);
-      })   
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const { loginUser, logInWithGoogle,setLoading,loading } = useAuth()
+
+  const handleLogin = async (data) => {
+    setError('')
+    try {
+
+      const result = await loginUser(data.email, data.password)
+      console.log(result);
+      reset()
+      navigate(location.state || '/')
+
+    } catch (err) {
+      console.log(err);
+      setLoading(false)
+      setError(err.message)
+    }
   }
 
   const HandleGoogle = () => {
 
     logInWithGoogle()
-     navigate(location.state?.form?.pathname || '/') 
+    navigate(location.state?.form?.pathname || '/')
+  }
+  
+  if(loading){
+    return <DynamicLoading></DynamicLoading>
   }
 
   return (
@@ -109,7 +116,7 @@ const Login = () => {
               className="border rounded-lg px-4 py-2 outline-none 
               focus:ring-2 focus:ring-black duration-300"
             />
-             <button type='button' onClick={() => setShow(!show)} className=' absolute top-9 right-4'>{show ? <EyeOff size={22} /> : <Eye size={22} />}</button>
+            <button type='button' onClick={() => setShow(!show)} className=' absolute top-9 right-4'>{show ? <EyeOff size={22} /> : <Eye size={22} />}</button>
           </motion.div>
 
           {errors.password?.type === 'required' && <p className='text-red-500 mb-2'>Password is Required</p>}

@@ -119,6 +119,8 @@ const MyLesson = () => {
 
     return (
         <div className="p-6">
+                        <title>My-Lessons</title>
+
             <motion.h2
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -5,6 +5,7 @@ import lifelesson from '../../assets/life-lesson.png';
 import useAuth from '../../Hooks/useAuth';
 import Loading from '../Loading/Loading';
 import useUser from '../../Hooks/useUser';
+import DynamicLoading from '../Loading/Loading';
 
 const Navber = () => {
     const { user, logout, loading } = useAuth();
@@ -12,7 +13,7 @@ const Navber = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     if (loading) {
-        return <Loading />;
+        return <DynamicLoading></DynamicLoading>;
     }
 
     const links = <>
@@ -101,7 +102,7 @@ const Navber = () => {
                                     className="absolute right-0 mt-2 w-54 bg-white border shadow-lg rounded overflow-hidden z-50"
                                 >
                                     <div className="p-2 border-b font-semibold">{user.displayName}</div>
-                                    <Link  className="block px-4 py-2 hover:bg-gray-100 transition">Profile</Link>
+                                    <Link to='/dashboard/myprofile' className="block px-4 py-2 hover:bg-gray-100 transition">Profile</Link>
                                     <Link to='/dashboard' className="block px-4 py-2 hover:bg-gray-100 transition">Dashboard</Link>
                                     <button
                                         onClick={() => {

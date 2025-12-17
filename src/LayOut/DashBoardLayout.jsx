@@ -56,10 +56,10 @@ const DashBoardLayout = () => {
           </Link>
         </li>
         <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Profile">
+          <Link to='/dashboard/myprofile' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Profile">
             <ShieldUser size={19} />
             <span className="is-drawer-close:hidden">My Profile</span>
-          </button>
+          </Link>
         </li>
 
         {/* List item */}

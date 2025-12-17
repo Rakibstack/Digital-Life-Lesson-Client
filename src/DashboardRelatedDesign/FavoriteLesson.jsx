@@ -50,6 +50,8 @@ const MyFavorites = () => {
     return (
 
         <div className="p-6 bg-white min-h-screen">
+                        <title>My Favorite-Lesson</title>
+
             {/* Title */}
             <h2 className="text-2xl font-semibold mb-4">
                 My Favorite Lessons

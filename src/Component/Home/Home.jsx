@@ -11,6 +11,7 @@ const Home = () => {
     return (
         
      <div> 
+        <title>Digital-Life-Lesson-Home</title>
       <HeroSlider></HeroSlider>
       <FeaturedLessons></FeaturedLessons>
       <WhyLearningMatters></WhyLearningMatters>

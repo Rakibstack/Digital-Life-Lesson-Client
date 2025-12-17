@@ -3,28 +3,19 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useUser from "../Hooks/useUser";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router";
 
 const AddLesson = () => {
 
     const { isPremium, name, email, photo } = useUser();
     const axiosInstance = useAxiosSecure();
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
         reset,
         clearErrors,
-        formState: { errors },
-    } = useForm({
-        defaultValues: {
-            title: "",
-            description: "",
-            category: "personal-growth",
-            tone: "motivational",
-            privacy: "public",
-            accessLevel: "free",
-        },
-    });
-    console.log(errors);
+    } = useForm();
 
 
     const onSubmit = async (data) => {
@@ -50,14 +41,8 @@ const AddLesson = () => {
                     text: "Your Lesson has been Created!",
                     icon: "success",
                 });
-                reset({
-                    title: "",
-                    description: "",
-                    category: "personal-growth",
-                    tone: "motivational",
-                    privacy: "public",
-                    accessLevel: "free",
-                });
+                reset();
+                navigate('/dashboard/mylesson')
                 clearErrors()
             }
         } catch (err) {
@@ -66,6 +51,7 @@ const AddLesson = () => {
     };
 
     return (
+        
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -78,6 +64,8 @@ const AddLesson = () => {
                            from-purple-600 to-blue-600 bg-clip-text text-transparent">
                 Create New Lesson 🚀
             </h2>
+                        <title>Add-Lesson</title>
+
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
