@@ -22,6 +22,11 @@ const Navber = () => {
        
          <NavLink to='/dashboard/addlesson'>Add Lesson</NavLink>
          <NavLink to='/dashboard/mylesson'>MY Lesson</NavLink>
+         {
+            user && <>
+            <NavLink to='/dashboard'>Dashboard</NavLink>
+            </>
+         }
         
       {
       user && (

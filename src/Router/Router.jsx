@@ -21,6 +21,7 @@ import AuthorDetails from "../Component/Home/AuthorDetails";
 import MyLesson from "../DashboardRelatedDesign/MyLesson";
 import FavoriteLesson from "../DashboardRelatedDesign/FavoriteLesson";
 import MyProfile from "../DashboardRelatedDesign/MyProfile";
+import DashboardHome from "../DashboardRelatedDesign/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,11 @@ const router = createBrowserRouter([
      path: 'dashboard',
      element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
      children: [
+      {
+          index: true,
+        
+          element: <DashboardHome></DashboardHome>
+      },
       {
         path:'addlesson',
         element: <AddLesson></AddLesson>
