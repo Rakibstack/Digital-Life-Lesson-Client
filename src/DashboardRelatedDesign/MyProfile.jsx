@@ -150,11 +150,11 @@ const Profile = () => {
               <button
                 type="button"
                 onClick={() => modalRef.current.close()}
-                className="btn btn-outline w-full"
+                className="btn btn-outline flex-1 "
               >
                 Close
               </button>
-              <button className="btn btn-primary w-full">
+              <button className="btn btn-primary flex-1">
                 Update
               </button>
             </div>
