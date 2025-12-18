@@ -5,6 +5,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Link } from "react-router";
 import RecentLessons from "../RecentLesson";
 import useUser from "../../Hooks/useUser";
+import AnalyticsChart from "../AnalyticsChart";
 
 const statVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -74,7 +75,7 @@ const DashboardHome = () => {
             initial="hidden"
             animate="visible"
             whileHover={{ scale: 1.05 }}
-            className="relative overflow-hidden rounded-2xl shadow-lg bg-white p-6"
+            className="relative overflow-hidden  rounded-2xl shadow-lg bg-white p-6"
           >
             <div
               className={`absolute inset-0 opacity-10 bg-gradient-to-br ${item.color}`}
@@ -126,6 +127,7 @@ const DashboardHome = () => {
 
       {/* Recent Lessons */}
       <RecentLessons />
+      <AnalyticsChart></AnalyticsChart>
 
     </div>
   );
