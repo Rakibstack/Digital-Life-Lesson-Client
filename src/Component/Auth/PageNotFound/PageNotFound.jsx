@@ -1,83 +1,70 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { ArrowLeft, Ghost } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const PageNotFound = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
+export default function NotFound404() {
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-300 via-pink-200 to-indigo-200 overflow-hidden p-4">
-
-      {/* Background floating neon circles */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 overflow-hidden relative">
+      {/* floating background blobs */}
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-[180px] bg-pink-400 opacity-40"
-        style={{ x: mousePos.x * 0.02, y: mousePos.y * 0.02 }}
+        className="absolute w-72 h-72 bg-purple-500/20 rounded-full blur-3xl top-10 -left-10"
+        animate={{ y: [0, 40, 0], x: [0, 30, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full blur-[150px] bg-purple-500 opacity-30"
-        style={{ x: -mousePos.x * 0.02, y: -mousePos.y * 0.02 }}
+        className="absolute w-72 h-72 bg-pink-500/20 rounded-full blur-3xl bottom-10 -right-10"
+        animate={{ y: [0, -40, 0], x: [0, -30, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* 404 Card */}
       <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_0_80px_-10px_rgba(125,95,255,0.5)] p-10 flex flex-col items-center text-center max-w-md"
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        className="relative bg-white/90 backdrop-blur rounded-2xl shadow-2xl p-10 max-w-md w-full text-center"
       >
-        {/* Floating 404 number */}
+        {/* icon bounce */}
+        <motion.div
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex justify-center mb-6"
+        >
+          <div className="bg-slate-100 p-5 rounded-full shadow-inner">
+            <Ghost className="w-14 h-14 text-slate-700" />
+          </div>
+        </motion.div>
+
+        {/* glitchy 404 */}
         <motion.h1
-          initial={{ scale: 1, rotate: -10 }}
-          animate={{ scale: [1, 1.05, 1], rotate: 10 }}
-          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          className="text-[8rem] font-extrabold text-purple-600 mb-4"
+          className="text-6xl font-extrabold text-slate-900 mb-2 tracking-widest"
+          animate={{ textShadow: [
+            "0px 0px 0px rgba(0,0,0,0)",
+            "2px 2px 0px rgba(236,72,153,0.6)",
+            "-2px -2px 0px rgba(168,85,247,0.6)",
+            "0px 0px 0px rgba(0,0,0,0)"
+          ] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
         >
           404
         </motion.h1>
 
-        {/* Message */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-gray-700 mb-6 text-lg"
-        >
-          Ooops! Looks like you’re lost in space.
-        </motion.p>
+        <h2 className="text-xl font-semibold text-slate-700 mb-2">
+          You seem lost
+        </h2>
+        <p className="text-slate-600 mb-8">
+          The page you’re looking for vanished into the void.
+        </p>
 
-        {/* Rocket illustration (interactive) */}
-        <motion.img
-          src="https://cdn-icons-png.flaticon.com/512/564/564619.png"
-          alt="Lost Rocket"
-          className="w-40 mb-6"
-          style={{
-            x: mousePos.x * 0.03 - 10,
-            y: Math.sin(mousePos.x * 0.01) * 20,
-          }}
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-        />
-
-        {/* Back Home Button */}
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             to="/"
-            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-medium rounded-lg shadow hover:shadow-lg transition-all duration-300"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-slate-900 text-white hover:bg-slate-700 transition"
           >
-            Back to Home
+            <ArrowLeft className="w-4 h-4" />
+            Take me home
           </Link>
         </motion.div>
       </motion.div>
     </div>
   );
-};
-
-export default PageNotFound;
+}

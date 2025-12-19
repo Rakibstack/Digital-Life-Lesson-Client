@@ -22,6 +22,8 @@ import MyLesson from "../DashboardRelatedDesign/MyLesson";
 import FavoriteLesson from "../DashboardRelatedDesign/FavoriteLesson";
 import MyProfile from "../DashboardRelatedDesign/MyProfile";
 import DashboardHome from "../DashboardRelatedDesign/DashboardHome/DashboardHome";
+import AdminOnlyRoute from "../Component/PrivateRoute/AdminOnlyRoute";
+import ManageUsers from "../DashboardRelatedDesign/AdminDashboard/ManageUser";
 
 const router = createBrowserRouter([
   {
@@ -93,8 +95,7 @@ const router = createBrowserRouter([
      element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
      children: [
       {
-          index: true,
-        
+          index: true,    
           element: <DashboardHome></DashboardHome>
       },
       {
@@ -112,6 +113,12 @@ const router = createBrowserRouter([
       {
         path: 'myprofile',
         element: <MyProfile></MyProfile>
+      },
+      {
+        path: 'admin/manage-users',
+        element: <AdminOnlyRoute>
+          <ManageUsers></ManageUsers>
+        </AdminOnlyRoute>
       }
      ]
   },
