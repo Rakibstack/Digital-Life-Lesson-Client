@@ -1,4 +1,4 @@
-import { BetweenVerticalEnd, BookOpen, BookOpenCheck, FilePlusCorner, FilePlusCornerIcon, HeartPlus, NotebookPen, ShieldUser, UserCog } from 'lucide-react';
+import { BetweenVerticalEnd, BookOpen, BookOpenCheck, FilePlusCorner, FilePlusCornerIcon, FlagOff, HeartPlus, NotebookPen, ShieldUser, UserCog } from 'lucide-react';
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import useUser from '../Hooks/useUser';
@@ -79,6 +79,12 @@ const DashBoardLayout = () => {
                     <Link to='/dashboard/admin/manage-lesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Lesson">
                     <BookOpenCheck size={19} />
                       <span className="is-drawer-close:hidden">Manage Lesson</span>
+                    </Link>
+                  </li>
+                 <li>
+                    <Link to='/dashboard/admin/report-lesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Report Lesson">
+                    <FlagOff size={19} />
+                      <span className="is-drawer-close:hidden">Report Lesson</span>
                     </Link>
                   </li>
                  
