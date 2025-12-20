@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router';
 import { motion, AnimatePresence } from 'framer-motion';
 import lifelesson from '../../assets/life-lesson.png';
 import useAuth from '../../Hooks/useAuth';
-import Loading from '../Loading/Loading';
 import useUser from '../../Hooks/useUser';
 import DynamicLoading from '../Loading/Loading';
 

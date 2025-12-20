@@ -1,11 +1,17 @@
-import { BetweenVerticalEnd, BookOpen, BookOpenCheck, FilePlusCorner, FilePlusCornerIcon, FlagOff, HeartPlus, NotebookPen, ShieldUser, UserCog } from 'lucide-react';
-import React from 'react';
+import { BetweenVerticalEnd,  BookOpenCheck, FilePlusCorner, FilePlusCornerIcon, FlagOff, HeartPlus, NotebookPen, ShieldUser, UserCog, UserStar } from 'lucide-react';
+import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router';
 import useUser from '../Hooks/useUser';
+import useAuth from '../Hooks/useAuth';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const DashBoardLayout = () => {
 
-  const { role } = useUser();
+  const { role, name, photo } = useUser();
+  const { logout, user } = useAuth()
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   return (
     <div className="drawer lg:drawer-open">
@@ -17,9 +23,66 @@ const DashBoardLayout = () => {
             {/* Sidebar toggle icon */}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
           </label>
-          <div> <Link to='/' className='font-extrabold hidden sm:block text-3xl'>
-            Digital Life <span className='bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent'>Lesson</span>
-          </Link></div>
+          <div className='flex justify-between w-full'>
+            <div>
+              <Link to='/' className='font-extrabold hidden sm:block text-3xl'>
+                Digital Life <span className='bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent'>Lesson</span>
+              </Link>
+            </div>
+
+            <div className="relative flex">
+              <img
+                src={user.photoURL}
+                alt={name}
+                className="w-13 h-13 mr-4 rounded-full cursor-pointer "
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              />
+
+              {/* Name & Role */}
+              <div className="text-left mr-2 leading-tight">
+                <h2 className="font-semibold mb-1 text-gray-800">
+                  {user.displayName}
+                </h2>
+                <span
+                  className={`text-xs font-semibold px-2 py-0.5 rounded-full
+                    ${role === "admin"
+                      ? "bg-red-100 text-red-600"
+                      : "bg-blue-100 text-blue-600"
+                    }`}
+                >
+                  {(role || 'user').toUpperCase()}
+                </span>
+              </div>
+              
+
+              <AnimatePresence>
+                {dropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-12 mt-16 w-54 bg-white border shadow-lg rounded overflow-hidden z-50"
+                  >
+                    <div className="p-2 border-b font-semibold">{name}</div>
+                    
+                    <Link to='/' className="block px-4 py-2 hover:bg-gray-100 transition">Home Page</Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100 transition"
+                    >
+                      Log out
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+            </div>
+
+          </div>
         </nav>
         {/* Page content here */}
         <div className="p-4">
@@ -69,28 +132,34 @@ const DashBoardLayout = () => {
               role === 'admin' && (
 
                 <>
-                 <li>
+                  <li>
                     <Link to='/dashboard/admin/manage-users' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage User">
-                    <UserCog size={19} />
+                      <UserCog size={19} />
                       <span className="is-drawer-close:hidden">Manage User</span>
                     </Link>
                   </li>
-                 <li>
+                  <li>
                     <Link to='/dashboard/admin/manage-lesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Lesson">
-                    <BookOpenCheck size={19} />
+                      <BookOpenCheck size={19} />
                       <span className="is-drawer-close:hidden">Manage Lesson</span>
                     </Link>
                   </li>
-                 <li>
+                  <li>
                     <Link to='/dashboard/admin/report-lesson' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Report Lesson">
-                    <FlagOff size={19} />
+                      <FlagOff size={19} />
                       <span className="is-drawer-close:hidden">Report Lesson</span>
                     </Link>
                   </li>
-                 
+                  <li>
+                    <Link to='/dashboard/adminProfile' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Admin Profile">
+                    <UserStar size={19} /> 
+                      <span className="is-drawer-close:hidden">Admin Profile</span>
+                    </Link>
+                  </li>
+
                 </>
-                 
-                
+
+
               )
 
 
