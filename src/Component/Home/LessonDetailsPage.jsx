@@ -72,8 +72,7 @@ const LessonDetailsPage = () => {
     // check favorite on load
     useEffect(() => {
         if (user?.email) {
-            axiosSecure
-                .get(`/favorites/${lesson._id}`)
+            axiosSecure.get(`/favorites/${lesson._id}`)
                 .then(res => setFavoritedByMe(res.data.favorited))
         }
     }, [lesson._id, user, axiosSecure])
@@ -191,6 +190,8 @@ const LessonDetailsPage = () => {
 
     return (
         <div className="max-w-6xl mx-auto p-6 space-y-6">
+                  <title>Life-Lesson-Details-Page</title>
+
 
             {/* Header: Title */}
             <header className="relative rounded-2xl overflow-hidden shadow-md bg-white">

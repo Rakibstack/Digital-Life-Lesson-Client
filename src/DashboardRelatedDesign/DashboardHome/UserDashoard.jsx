@@ -30,7 +30,7 @@ const DashboardHome = () => {
 
   return (
     <div className="p-6 space-y-10">
-
+      <title>Digital-Life-Lesson-Dashboard</title>
       {/* Welcome Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

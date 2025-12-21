@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import useAxios from "../Hooks/useAxios";
 import { ArrowLeft, ArrowRight, } from "lucide-react";
-import Loading from "../Component/Loading/Loading";
 
 const BrowsePublicLessons = () => {
 

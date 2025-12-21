@@ -96,6 +96,7 @@ const ManageLessons = () => {
 
     return (
         <div className="p-6">
+            <title>Manage-Lesson</title>
             <h2 className="text-2xl font-bold mb-6">
                 Manage Lessons
             </h2>

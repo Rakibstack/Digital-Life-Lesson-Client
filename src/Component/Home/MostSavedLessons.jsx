@@ -1,37 +1,53 @@
 import React from "react";
 import { Bookmark } from "lucide-react";
-// You can fetch data later and replace this static array
-// Example API response structure idea:
-// const { data: savedLessons = [] } = useQuery({ ... })
+import useAxios from "../../Hooks/useAxios";
+import DynamicLoading from "../Loading/Loading";
+import { useQuery } from "@tanstack/react-query";
+
+
 
 const MostSavedLessons = () => {
 
-  const mostSavedLessons = [
-    {
-      title: "How to Deal With Failure",
-      author: "John Doe",
-      saves: 320,
-      thumbnail: "https://i.ibb.co/JCjYnB7/life1.jpg"
-    },
-    {
-      title: "The Art of Living Peacefully",
-      author: "Sophia Mia",
-      saves: 280,
-      thumbnail: "https://i.ibb.co/bdPWsR6/life2.jpg"
-    },
-    {
-      title: "Why Gratitude Changes Your Life",
-      author: "Rahim Uddin",
-      saves: 250,
-      thumbnail: "https://i.ibb.co/cy9cXJ4/life3.jpg"
-    },
-    {
-      title: "Overcoming Self-Doubt",
-      author: "Ayesha Khaled",
-      saves: 230,
-      thumbnail: "https://i.ibb.co/6tdfwcq/life4.jpg"
-    }
-  ];
+    const axiosInstance = useAxios()
+
+  const { data: lessons = [], isLoading } = useQuery({
+  queryKey: ["mostSavedLessons"],
+  queryFn: async () => {
+    const res = await axiosInstance.get("/most-saved-lessons");
+    return res.data;
+  }
+});
+
+  // const mostSavedLessons = [
+  //   {
+  //     title: "How to Deal With Failure",
+  //     author: "John Doe",
+  //     saves: 320,
+  //     thumbnail: "https://i.ibb.co/JCjYnB7/life1.jpg"
+  //   },
+  //   {
+  //     title: "The Art of Living Peacefully",
+  //     author: "Sophia Mia",
+  //     saves: 280,
+  //     thumbnail: "https://i.ibb.co/bdPWsR6/life2.jpg"
+  //   },
+  //   {
+  //     title: "Why Gratitude Changes Your Life",
+  //     author: "Rahim Uddin",
+  //     saves: 250,
+  //     thumbnail: "https://i.ibb.co/cy9cXJ4/life3.jpg"
+  //   },
+  //   {
+  //     title: "Overcoming Self-Doubt",
+  //     author: "Ayesha Khaled",
+  //     saves: 230,
+  //     thumbnail: "https://i.ibb.co/6tdfwcq/life4.jpg"
+  //   }
+  // ];
+
+  if(isLoading){
+    return <DynamicLoading></DynamicLoading>
+  }
 
   return (
     <section className="my-16">
@@ -43,7 +59,7 @@ const MostSavedLessons = () => {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {mostSavedLessons.map((lesson, idx) => (
+        {lessons.map((lesson, idx) => (
           <div
             key={idx}
             className="rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-xl transition duration-300"

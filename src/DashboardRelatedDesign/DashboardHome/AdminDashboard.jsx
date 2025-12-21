@@ -5,6 +5,8 @@ const AdminDashboard = () => {
 
     return (
         <div>
+                  <title>Digital-Life-Lesson-Dashboard</title>
+
             <AdminDashboardHome></AdminDashboardHome>
         </div>
     );

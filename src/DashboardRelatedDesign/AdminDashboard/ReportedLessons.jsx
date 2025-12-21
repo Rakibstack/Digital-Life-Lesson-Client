@@ -87,6 +87,7 @@ const ReportedLessons = () => {
 
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+      <title>Manage-Report</title>
       {/* Header */}
       <div>
         <h2 className="text-3xl font-bold text-gray-800">

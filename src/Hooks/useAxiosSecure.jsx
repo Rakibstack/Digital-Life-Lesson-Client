@@ -4,7 +4,7 @@ import useAuth from './useAuth';
 
   const axiosInstance = axios.create({
 
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://digital-life-lesson-server-eta.vercel.app'
   })
 
 const useAxiosSecure = () => {
