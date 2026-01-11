@@ -111,7 +111,7 @@ const Navber = () => {
 
       {/* CENTER */}
       <div className="navbar-center hidden lg:flex">
-        <nav className="flex gap-6 font-semibold">{links}</nav>
+        <nav className="flex gap-4 font-semibold">{links}</nav>
       </div>
 
       {/* RIGHT */}

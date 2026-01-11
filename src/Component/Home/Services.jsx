@@ -58,8 +58,8 @@ const PremiumServiceSection = () => {
             <p className="text-gray-200 text-sm">{service.description}</p>
 
             {/* Decorative gradient blur behind card */}
-            <div className="absolute -z-10 top-0 right-0 w-32 h-32 bg-gradient-to-r from-pink-400 to-purple-600 rounded-full opacity-20 blur-3xl"></div>
-            <div className="absolute -z-10 bottom-0 left-0 w-32 h-32 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full opacity-20 blur-3xl"></div>
+            {/* <div className="absolute -z-10 top-0 right-0 w-32 h-32 bg-gradient-to-r from-pink-400 to-purple-600 rounded-full opacity-20 blur-3xl"></div>
+            <div className="absolute -z-10 bottom-0 left-0 w-32 h-32 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full opacity-20 blur-3xl"></div> */}
           </motion.div>
         ))}
       </div>
