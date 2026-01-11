@@ -27,6 +27,8 @@ import ManageUsers from "../DashboardRelatedDesign/AdminDashboard/ManageUser";
 import ManageLessons from "../DashboardRelatedDesign/AdminDashboard/ManageLessons";
 import ReportedLessons from "../DashboardRelatedDesign/AdminDashboard/ReportedLessons";
 import AdminProfile from "../DashboardRelatedDesign/AdminDashboard/AdminProfile";
+import AboutSection from "../Component/Home/AboutSection";
+import ServiceSection from "../Component/Home/Services";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
         {
           path: '/public',
           element: <BrowsePublicLessons></BrowsePublicLessons>
+        },
+        {
+          path: '/about',
+          element: <AboutSection></AboutSection>
+        },
+        {
+          path: '/services',
+          element:<ServiceSection></ServiceSection>
         },
         {
           path: '/lessons/:id',
