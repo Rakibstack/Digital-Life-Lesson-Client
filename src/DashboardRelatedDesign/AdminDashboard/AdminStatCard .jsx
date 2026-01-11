@@ -1,33 +1,46 @@
 import { motion } from "framer-motion";
 
 const AdminStatCard = ({ title, value }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.03 }}
-            className="relative bg-white p-6 rounded-2xl shadow-md 
-                 hover:shadow-xl transition border overflow-hidden"
-        >
-            {/* soft gradient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br 
-                      from-purple-100/40 to-transparent opacity-0 
-                      hover:opacity-100 transition" />
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      whileHover={{ scale: 1.04 }}
+      className="relative overflow-hidden rounded-3xl
+                 bg-white p-6
+                 shadow-md hover:shadow-2xl
+                 transition-all"
+    >
+      {/* Glow blob */}
+      <div
+        className="absolute -top-10 -right-10 w-32 h-32
+                   bg-purple-400/20 rounded-full blur-3xl"
+      />
 
-            <p className="text-sm font-medium text-gray-500 tracking-wide">
-                {title}
-            </p>
+      {/* Content */}
+      <div className="relative z-10">
+        <p className="text-sm font-semibold text-gray-500 tracking-wide">
+          {title}
+        </p>
 
-            <h3 className="text-4xl font-bold mt-3 text-gray-800">
-                {value || 0}
-            </h3>
+        <h3 className="mt-3 text-4xl font-extrabold
+                       bg-gradient-to-r from-purple-600 to-indigo-500
+                       bg-clip-text text-transparent">
+          {value || 0}
+        </h3>
+      </div>
 
-            {/* subtle bottom accent */}
-            <span className="absolute bottom-0 left-0 h-1 w-full 
-                       bg-gradient-to-r from-purpe-600 to-blue-500" />
-        </motion.div>
-    );
+      {/* Animated bottom accent */}
+      <motion.span
+        initial={{ width: 0 }}
+        animate={{ width: "100%" }}
+        transition={{ delay: 0.2, duration: 0.7 }}
+        className="absolute bottom-0 left-0 h-[3px]
+                   bg-gradient-to-r from-purple-600 to-indigo-500"
+      />
+    </motion.div>
+  );
 };
 
 export default AdminStatCard;

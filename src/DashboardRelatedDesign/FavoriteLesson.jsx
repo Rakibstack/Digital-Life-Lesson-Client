@@ -6,17 +6,14 @@ import { Eye, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import DynamicLoading from "../Component/Loading/Loading";
 
 const MyFavorites = () => {
   const axiosSecure = useAxiosSecure();
   const [category, setCategory] = useState("");
   const [tone, setTone] = useState("");
 
-  const {
-    data: favorites = [],
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: favorites = [], refetch, isLoading } = useQuery({
     queryKey: ["favorites", category, tone],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -45,31 +42,34 @@ const MyFavorites = () => {
     });
   };
 
+  if (isLoading) return <DynamicLoading />;
+
   return (
     <div className="p-6 space-y-8 min-h-screen bg-gray-50">
       <title>My Favorite Lessons</title>
 
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="p-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg"
+        transition={{ duration: 0.6 }}
+        className="p-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-2xl"
       >
-        <h2 className="text-3xl font-bold"> My Favorite Lessons</h2>
-        <p className="text-pink-100">
+        <h2 className="text-3xl font-bold">My Favorite Lessons</h2>
+        <p className="text-pink-100 mt-1">
           All the lessons you saved for later
         </p>
       </motion.div>
 
       {/* Filters */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex flex-wrap gap-4 bg-white p-4 rounded-2xl shadow"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-wrap gap-4 bg-white p-4 rounded-2xl shadow-md"
       >
         <select
           onChange={(e) => setCategory(e.target.value)}
-          className="select select-bordered"
+          className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
         >
           <option value="">All Categories</option>
           <option value="personal growth">Personal Growth</option>
@@ -81,7 +81,7 @@ const MyFavorites = () => {
 
         <select
           onChange={(e) => setTone(e.target.value)}
-          className="select select-bordered"
+          className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
         >
           <option value="">All Tones</option>
           <option value="motivational">Motivational</option>
@@ -99,7 +99,7 @@ const MyFavorites = () => {
               <th>Title</th>
               <th>Category</th>
               <th>Tone</th>
-              <th>Actions</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
 
@@ -107,11 +107,11 @@ const MyFavorites = () => {
             {favorites.map((fav, index) => (
               <motion.tr
                 key={fav._id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.01 }}
-                className="hover:bg-pink-50/40"
+                whileHover={{ scale: 1.01, backgroundColor: "rgba(255,192,203,0.2)" }}
+                className="hover:shadow-md rounded-xl transition-all"
               >
                 <td className="font-medium">{fav.title}</td>
 
@@ -127,10 +127,10 @@ const MyFavorites = () => {
                   </span>
                 </td>
 
-                <td className="flex gap-2">
+                <td className="flex gap-2 justify-center">
                   <Link
                     to={`/lessons/${fav.lessonId}`}
-                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:scale-110 transition"
+                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:scale-110 transition-transform"
                     title="View"
                   >
                     <Eye size={16} />
@@ -138,7 +138,7 @@ const MyFavorites = () => {
 
                   <button
                     onClick={() => handleRemove(fav._id)}
-                    className="p-2 rounded-lg bg-red-100 text-red-600 hover:scale-110 transition"
+                    className="p-2 rounded-lg bg-red-100 text-red-600 hover:scale-110 transition-transform"
                     title="Remove"
                   >
                     <Trash2 size={16} />
@@ -149,10 +149,11 @@ const MyFavorites = () => {
           </tbody>
         </table>
 
-        {!isLoading && favorites.length === 0 && (
-          <p className="text-center py-16 text-gray-400">
-            ⭐ You haven't saved any lessons yet
-          </p>
+        {favorites.length === 0 && (
+          <div className="text-center py-16 text-gray-400 flex flex-col items-center gap-3">
+            <span className="text-6xl animate-bounce">⭐</span>
+            <p>You haven't saved any lessons yet</p>
+          </div>
         )}
       </div>
     </div>

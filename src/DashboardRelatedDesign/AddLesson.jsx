@@ -62,7 +62,7 @@ const AddLesson = () => {
         >
             <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r 
                            from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                Create New Lesson 🚀
+                Create New Lesson 
             </h2>
                         <title>Add-Lesson</title>
 
@@ -139,7 +139,7 @@ const AddLesson = () => {
                                bg-gradient-to-r from-purple-600 to-blue-600 text-white 
                                shadow-md hover:shadow-xl transition"
                 >
-                    Create Lesson ✍️
+                    Create Lesson 
                 </motion.button>
             </form>
         </motion.div>

@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 
 const DashBoardLayout = () => {
 
-  const { role, name, photo } = useUser();
+  const { role, name} = useUser();
   const { logout, user } = useAuth()
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -158,11 +158,7 @@ const DashBoardLayout = () => {
                   </li>
 
                 </>
-
-
               )
-
-
             }
 
             {/* List item */}
