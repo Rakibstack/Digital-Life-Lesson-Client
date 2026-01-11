@@ -28,12 +28,7 @@ const Navber = () => {
       <NavLink to="/public" className="hover:text-primary transition">
         Public Lessons
       </NavLink>
-      <NavLink to="/dashboard/addlesson" className="hover:text-primary transition">
-        Add Lesson
-      </NavLink>
-      <NavLink to="/dashboard/mylesson" className="hover:text-primary transition">
-        My Lesson
-      </NavLink>
+     
 
       {user && (
         <NavLink to="/dashboard" className="hover:text-primary transition">

@@ -41,7 +41,7 @@ const BrowsePublicLessons = () => {
             <title>Public-Lesson</title>
             <h1 className="text-4xl font-bold text-center mb-3 
                      bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
-                Browse Public Life Lessons 🌍
+                Browse Public Life Lessons 
             </h1>
             <p className="text-center mb-10 text-gray-600">
                 Explore real experiences, stories and wisdom shared by the community.
@@ -58,7 +58,7 @@ const BrowsePublicLessons = () => {
                 <div className="relative">
                     <input
                         type="text"
-                        placeholder="🔍 Search wisdom..."
+                        placeholder=" Search wisdom..."
                         value={search}
                         onChange={(e) => { setSearch(e.target.value); setCurrentPage(0); }}
                         className="px-4 py-2 pr-10 w-60 rounded-xl bg-gray-50 border 
@@ -73,7 +73,7 @@ const BrowsePublicLessons = () => {
                     className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
                    focus:ring-2 focus:ring-purple-500 outline-none"
                 >
-                    <option value="">📂 All Categories</option>
+                    <option value=""> All Categories</option>
                     <option value="mindset">Mindset</option>
                     <option value="productivity">Productivity</option>
                     <option value="relationship">Relationships</option>
@@ -87,7 +87,7 @@ const BrowsePublicLessons = () => {
                     className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
                    focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                    <option value="">🎭 All Tones</option>
+                    <option value=""> All Tones</option>
                     <option value="motivational">Motivational</option>
                     <option value="realization">Realization</option>
                     <option value="sad">Sad</option>
@@ -101,9 +101,9 @@ const BrowsePublicLessons = () => {
                     className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
                    focus:ring-2 focus:ring-green-500 outline-none"
                 >
-                    <option value="newest">🆕 Newest First</option>
-                    <option value="oldest">📅 Oldest First</option>
-                    <option value="mostSaved">⭐ Most Saved</option>
+                    <option value="newest"> Newest First</option>
+                    <option value="oldest"> Oldest First</option>
+                    <option value="mostSaved"> Most Saved</option>
                 </select>
             </motion.div>
                 <div className="my-5 ">
@@ -175,35 +175,54 @@ const BrowsePublicLessons = () => {
                 })}
             </div>
 
-            <div className=" flex flex-wrap justify-center items-center gap-5 mt-10">
-                {currentPage > 0 && (
-                    <button
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        className="btn"
-                    >
-                        <ArrowLeft /> Prev
-                    </button>
-                )}
+           <div className="mt-14 flex flex-wrap justify-center">
+  <div className="flex items-center gap-2 px-5 py-3 rounded-2xl 
+                  bg-white/70 backdrop-blur-xl border shadow-lg">
 
-                {
-                    [...Array(totalPage).keys()].map(i => <button
-                        key={i}
-                        onClick={() => setCurrentPage(i)}
-                        className={`btn ${i === currentPage ? "btn-primary" : ""}`}
-                    >
-                        {i + 1}
-                    </button>)
-                }
+    {/* Prev */}
+    {currentPage > 0 && (
+      <button
+        onClick={() => setCurrentPage(currentPage - 1)}
+        className="flex items-center gap-1 px-4 py-2 rounded-xl
+                   text-gray-700 font-medium
+                   hover:bg-gray-100 transition"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Prev
+      </button>
+    )}
 
-                {currentPage < totalPage - 1 && (
-                    <button
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        className="btn"
-                    >
-                        Next <ArrowRight />
-                    </button>
-                )}
-            </div>
+    {/* Page Numbers */}
+    {[...Array(totalPage).keys()].map((i) => (
+      <button
+        key={i}
+        onClick={() => setCurrentPage(i)}
+        className={`w-10 h-10 rounded-xl font-semibold transition
+          ${
+            i === currentPage
+              ? "bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md"
+              : "text-gray-600 hover:bg-gray-100"
+          }`}
+      >
+        {i + 1}
+      </button>
+    ))}
+
+    {/* Next */}
+    {currentPage < totalPage - 1 && (
+      <button
+        onClick={() => setCurrentPage(currentPage + 1)}
+        className="flex items-center gap-1 px-4 py-2 rounded-xl
+                   text-gray-700 font-medium
+                   hover:bg-gray-100 transition"
+      >
+        Next
+        <ArrowRight className="w-4 h-4" />
+      </button>
+    )}
+  </div>
+</div>
+
         </div>
     );
 };
