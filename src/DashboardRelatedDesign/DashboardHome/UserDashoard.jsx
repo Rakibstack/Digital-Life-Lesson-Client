@@ -113,14 +113,14 @@ const DashboardHome = () => {
             to="/dashboard/mylesson"
             className="px-5 py-3 rounded-xl bg-white shadow hover:shadow-md transition font-medium"
           >
-            📘 My Lessons
+             My Lessons
           </Link>
 
           <Link
             to="/dashboard/favoriteLesson"
             className="px-5 py-3 rounded-xl bg-white shadow hover:shadow-md transition font-medium"
           >
-            ⭐ Saved Lessons
+             Saved Lessons
           </Link>
         </div>
       </motion.div>

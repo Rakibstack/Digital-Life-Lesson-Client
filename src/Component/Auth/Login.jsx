@@ -8,50 +8,73 @@ import DynamicLoading from '../Loading/Loading';
 
 const Login = () => {
 
-  const [error, setError] = useState(null)
-  const [show, setShow] = useState(false)
-  // const [Loading, setLoading] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [error, setError] = useState(null);
+  const [show, setShow] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const { loginUser, logInWithGoogle,setLoading,loading } = useAuth()
+  const { loginUser, logInWithGoogle, setLoading, loading } = useAuth();
 
+  // ---------------- NORMAL LOGIN ----------------
   const handleLogin = async (data) => {
-    setError('')
+    setError('');
     try {
-
-      const result = await loginUser(data.email, data.password)
-      console.log(result);
-      reset()
-      navigate(location.state || '/')
-
+      await loginUser(data.email, data.password);
+      reset();
+      navigate(location.state || '/');
     } catch (err) {
-      console.log(err);
-      setLoading(false)
-      setError(err.message)
+      setLoading(false);
+      setError(err.message);
     }
-  }
+  };
 
-  const HandleGoogle = () => {
+  // ---------------- DEMO LOGIN ----------------
+  const handleDemoLogin = async (role) => {
+    setError('');
+    setLoading(true);
 
-    logInWithGoogle()
-    navigate(location.state?.form?.pathname || '/')
-  }
-  
-  if(loading){
-    return <DynamicLoading></DynamicLoading>
+    const demoCredentials =
+      role === 'admin'
+        ? {
+            email: 'asif1@gmail.com',
+            password: 'Asif1!',
+          }
+        : {
+            email: 'Rakib25@gmail.com',
+            password: 'Rakib1',
+          };
+
+    try {
+      await loginUser(
+        demoCredentials.email,
+        demoCredentials.password
+      );
+      navigate('/');
+    } catch (err) {
+      setError("Demo login failed");
+      setLoading(false);
+    }
+  };
+
+  // ---------------- GOOGLE LOGIN ----------------
+  const HandleGoogle = async () => {
+    await logInWithGoogle();
+    navigate(location.state?.from?.pathname || '/');
+  };
+
+  if (loading) {
+    return <DynamicLoading />;
   }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f5f6fa] p-4">
-
       <motion.div
         initial={{ opacity: 0, y: 30, scale: .95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: .7, ease: "easeOut" }}
-        whileHover={{ scale: 1.02, transition: { duration: .2 } }}
+        whileHover={{ scale: 1.02 }}
         className="
           w-full max-w-md bg-white rounded-2xl p-8 
           shadow-[0_0_70px_-10px_rgba(255,0,150,0.4),0_0_70px_-10px_rgba(0,120,255,0.4)]
@@ -59,13 +82,15 @@ const Login = () => {
         "
       >
 
+        {/* Glow */}
         <div className="absolute inset-0 rounded-2xl
-          bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 opacity-30 blur-[60px] -z-10">
+          bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 
+          opacity-30 blur-[60px] -z-10">
         </div>
 
         <form onSubmit={handleSubmit(handleLogin)}>
 
-          {/* HEADER ANIMATED SOFTLY */}
+          {/* HEADER */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,12 +100,18 @@ const Login = () => {
             <h2 className="text-2xl font-semibold">Sign in</h2>
             <p className="text-sm">
               Dont have an account?
-              <Link state={location.state} to='/auth/register' className="bg-gradient-to-r from-[#632EE3]  to-[#9F62F2] 
-              bg-clip-text text-transparent font-medium hover:underline ml-1">Join now</Link>
+              <Link
+                to='/auth/register'
+                state={location.state}
+                className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2]
+                bg-clip-text text-transparent font-medium hover:underline ml-1"
+              >
+                Join now
+              </Link>
             </p>
           </motion.div>
 
-          {/* EMAIL (DESIGN SAME) + SLIDE IN LEFT */}
+          {/* EMAIL */}
           <motion.div
             initial={{ opacity: 0, x: -25 }}
             animate={{ opacity: 1, x: 0 }}
@@ -96,9 +127,9 @@ const Login = () => {
               focus:ring-2 focus:ring-black duration-300"
             />
           </motion.div>
-          {errors.email?.type === 'required' && <p className='text-red-500 mb-2'>Email is Required</p>}
+          {errors.email && <p className="text-red-500 mb-2">Email is required</p>}
 
-          {/* PASSWORD (UNCHANGED UI) + SLIDE IN RIGHT */}
+          {/* PASSWORD */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             animate={{ opacity: 1, x: 0 }}
@@ -107,43 +138,35 @@ const Login = () => {
           >
             <div className="flex justify-between text-sm font-medium">
               <label>Password</label>
-              <Link to='/auth/forgotpassword' className="hover:underline">Forgot Password?</Link>
+              <Link to='/auth/forgotpassword' className="hover:underline">
+                Forgot Password?
+              </Link>
             </div>
             <input
               type={show ? 'text' : 'password'}
               {...register('password', { required: true })}
-              placeholder="Password (min. 8 character)"
+              placeholder="Password"
               className="border rounded-lg px-4 py-2 outline-none 
               focus:ring-2 focus:ring-black duration-300"
             />
-            <button type='button' onClick={() => setShow(!show)} className=' absolute top-9 right-4'>{show ? <EyeOff size={22} /> : <Eye size={22} />}</button>
+            <button
+              type="button"
+              onClick={() => setShow(!show)}
+              className="absolute top-9 right-4"
+            >
+              {show ? <EyeOff size={22} /> : <Eye size={22} />}
+            </button>
           </motion.div>
+          {errors.password && <p className="text-red-500 mb-2">Password is required</p>}
 
-          {errors.password?.type === 'required' && <p className='text-red-500 mb-2'>Password is Required</p>}
-
-
-          {/* REMEMBER CHECKBOX */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: .6 }}
-            className="flex items-center gap-2 mb-6"
-          >
-            <input type="checkbox" className="w-4 h-4" />
-            <p className="text-sm">Remember me</p>
-          </motion.div>
+          {/* ERROR */}
           {error && (
             <p className="text-red-500 text-sm font-semibold mb-3">
-              {error === "Firebase: Error (auth/wrong-password)."
-                ? "Wrong password! Try again."
-                : error === "Firebase: Error (auth/user-not-found)."
-                  ? "User not found! Check email."
-                  : error
-              }
+              {error}
             </p>
           )}
 
-          {/* SIGN IN BUTTON + TAP ANIMATION */}
+          {/* SIGN IN */}
           <motion.button
             whileTap={{ scale: .95 }}
             className="w-full py-2 bg-black text-white rounded-lg 
@@ -155,20 +178,43 @@ const Login = () => {
           {/* DIVIDER */}
           <div className="my-5 border-b w-full opacity-30"></div>
 
-          {/* GOOGLE BUTTON (UNCHANGED ONLY SOFT FADE-IN) */}
+          {/* DEMO LOGIN BUTTONS */}
+          <div className="flex gap-3 mb-4">
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('user')}
+              className="w-1/2 py-2 rounded-lg bg-blue-500 text-white text-sm font-medium hover:opacity-90"
+            >
+              Demo User
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleDemoLogin('admin')}
+              className="w-1/2 py-2 rounded-lg bg-red-500 text-white text-sm font-medium hover:opacity-90"
+            >
+              Demo Admin
+            </button>
+          </div>
+
+          {/* GOOGLE LOGIN */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: .7 }}
-            className="w-full py-2 border rounded-lg flex items-center 
-            justify-center gap-2 text-sm font-medium hover:bg-gray-100 duration-200"
+            type="button"
             onClick={HandleGoogle}
+            className="w-full py-2 border rounded-lg flex items-center 
+            justify-center gap-2 text-sm font-medium hover:bg-gray-100"
           >
-            <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5" />
+            <img
+              src="https://www.svgrepo.com/show/355037/google.svg"
+              className="w-5"
+            />
             Sign in with Google
           </motion.button>
-        </form>
 
+        </form>
       </motion.div>
     </div>
   );
