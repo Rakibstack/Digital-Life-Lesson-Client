@@ -56,8 +56,8 @@ const AddLesson = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, type: "spring" }}
-            className="max-w-xl mx-auto bg-white/80 backdrop-blur-md 
-                       border border-gray-200 shadow-2xl rounded-2xl 
+            className="max-w-xl mx-auto bg-base-100/80 backdrop-blur-md 
+                       border border-base-300 shadow-2xl rounded-2xl 
                        p-10 mt-10"
         >
             <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r 
@@ -74,7 +74,7 @@ const AddLesson = () => {
                     transition={{ type: "spring", stiffness: 200 }}
                     {...register("title", { required: true })}
                     placeholder="Lesson Title"
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-purple-500 outline-none"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg focus:border-purple-500 outline-none"
                 />
 
                 <motion.textarea
@@ -83,13 +83,13 @@ const AddLesson = () => {
                     {...register("description", { required: true })}
                     rows={5}
                     placeholder="Write your full life lesson or story..."
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:border-purple-500 outline-none resize-none"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg focus:border-purple-500 outline-none resize-none"
                 ></motion.textarea>
 
                 <motion.select
                     whileHover={{ scale: 1.02 }}
                     {...register("category")}
-                    className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg outline-none focus:border-purple-500"
                 >
                     <option value="personal-growth">Personal Growth</option>
                     <option value="career">Career</option>
@@ -101,7 +101,7 @@ const AddLesson = () => {
                 <motion.select
                     whileHover={{ scale: 1.02 }}
                     {...register("tone")}
-                    className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg outline-none focus:border-purple-500"
                 >
                     <option value="motivational">Motivational</option>
                     <option value="sad">Sad</option>
@@ -112,7 +112,7 @@ const AddLesson = () => {
                 <motion.select
                     whileHover={{ scale: 1.02 }}
                     {...register("privacy")}
-                    className="w-full p-3 border rounded-lg outline-none focus:border-purple-500"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg outline-none focus:border-purple-500"
                 >
                     <option value="public">Public</option>
                     <option value="private">Private</option>
@@ -122,7 +122,7 @@ const AddLesson = () => {
                     whileHover={{ scale: 1.02 }}
                     {...register("accessLevel")}
                     disabled={!isPremium}
-                    className="w-full p-3 border rounded-lg outline-none focus:border-purple-500 cursor-pointer"
+                    className="w-full p-3 border border-base-300 bg-base-100 rounded-lg outline-none focus:border-purple-500 cursor-pointer"
                 >
                     <option value="free">Free</option>
                     <option value="premium">Premium</option>

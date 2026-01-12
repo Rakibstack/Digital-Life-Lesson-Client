@@ -105,9 +105,9 @@ const MyLesson = () => {
       </motion.div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl bg-white/80 backdrop-blur shadow-xl border">
+      <div className="overflow-x-auto rounded-2xl bg-base-100/80 backdrop-blur shadow-xl border border-base-300">
         <table className="table w-full">
-          <thead className="bg-gradient-to-r from-indigo-50 to-purple-50">
+          <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20">
             <tr>
               <th>Title</th>
               <th>Visibility</th>
@@ -122,7 +122,7 @@ const MyLesson = () => {
           <tbody>
             {myLesson.length === 0 && (
               <tr>
-                <td colSpan="7" className="text-center py-16 text-gray-400">
+                <td colSpan="7" className="text-center py-16 text-base-content/50">
                   😔 No lessons yet. Create your first one!
                 </td>
               </tr>

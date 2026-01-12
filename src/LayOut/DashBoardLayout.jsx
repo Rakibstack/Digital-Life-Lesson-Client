@@ -9,6 +9,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import useUser from '../Hooks/useUser';
 import useAuth from '../Hooks/useAuth';
 import { AnimatePresence, motion } from 'framer-motion';
+import ThemeToggle from '../Component/ThemeToggle/ThemeToggle';
 
 const DashBoardLayout = () => {
   const { role, name } = useUser();
@@ -37,9 +38,9 @@ const menuLinks = [
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       
       {/* Main content */}
-      <div className="drawer-content flex flex-col min-h-screen bg-gray-50">
+      <div className="drawer-content flex flex-col min-h-screen bg-base-200">
         {/* Navbar */}
-        <nav className="navbar bg-white shadow-md px-6 py-3 flex justify-between items-center sticky top-0 z-30">
+        <nav className="navbar bg-base-100 shadow-md px-6 py-3 flex justify-between items-center sticky top-0 z-30">
           <label htmlFor="my-drawer-4" className="btn btn-square btn-ghost lg:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
@@ -52,6 +53,7 @@ const menuLinks = [
 
           {/* User dropdown */}
           <div className="relative flex items-center gap-3">
+            <ThemeToggle />
             <img 
               src={user.photoURL} 
               alt={name} 
@@ -59,7 +61,7 @@ const menuLinks = [
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             <div className="hidden sm:flex flex-col leading-tight">
-              <h2 className="font-semibold text-gray-800">{user.displayName}</h2>
+              <h2 className="font-semibold">{user.displayName}</h2>
               <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${role === 'admin' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'}`}>
                 {role?.toUpperCase() || 'USER'}
               </span>
@@ -73,11 +75,11 @@ const menuLinks = [
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-14 mt-52 w-52 bg-white border shadow-lg rounded-xl overflow-hidden z-50"
+                  className="absolute right-14 mt-52 w-52 bg-base-100 border border-base-300 shadow-lg rounded-xl overflow-hidden z-50"
                 >
-                  <div className="p-3 border-b font-semibold">{name}</div>
-                  <Link to='/' className="block px-4 py-2 hover:bg-gray-100 transition">Home Page</Link>
-                  <button onClick={() => { logout(); setDropdownOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-gray-100 transition">Log out</button>
+                  <div className="p-3 border-b border-base-300 font-semibold">{name}</div>
+                  <Link to='/' className="block px-4 py-2 hover:bg-base-200 transition">Home Page</Link>
+                  <button onClick={() => { logout(); setDropdownOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-base-200 transition">Log out</button>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -91,7 +93,7 @@ const menuLinks = [
       </div>
 
       {/* Sidebar */}
-      <div className="drawer-side bg-gray-100 border-r border-gray-200">
+      <div className="drawer-side bg-base-100 border-r border-base-300">
         <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
         <ul className="menu p-4 w-64 space-y-1">
           {menuLinks.map((link, i) => (

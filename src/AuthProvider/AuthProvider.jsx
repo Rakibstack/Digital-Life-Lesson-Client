@@ -43,16 +43,26 @@ const AuthProvider = ({ children }) => {
 
     // observe user State
     useEffect(() => {
+        const startTime = Date.now();
+        const minLoadingTime = 2000; // 2 seconds minimum
 
-    const unsubscribe = onAuthStateChanged(auth,(currentUser) => {  
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            
+            // Calculate remaining time to show loading
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
 
-         setUser(currentUser)
-         setLoading(false)       
-    })
-    return () => {
-        unsubscribe();
-    }
-    },[])
+            // Ensure loading shows for at least minLoadingTime
+            setTimeout(() => {
+                setLoading(false);
+            }, remainingTime);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     const authInfo = {
      createUser,loading,loginUser,

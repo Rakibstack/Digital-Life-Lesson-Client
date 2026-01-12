@@ -43,7 +43,7 @@ const BrowsePublicLessons = () => {
                      bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
                 Browse Public Life Lessons 
             </h1>
-            <p className="text-center mb-10 text-gray-600">
+            <p className="text-center mb-10 text-base-content/70">
                 Explore real experiences, stories and wisdom shared by the community.
             </p>
 
@@ -51,7 +51,7 @@ const BrowsePublicLessons = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full bg-white/60 backdrop-blur-xl shadow-lg border border-white/40 
+                className="w-full bg-base-100/60 backdrop-blur-xl shadow-lg border border-base-300 
                rounded-2xl p-6 mb-10 flex flex-wrap items-center justify-center gap-5"
             >
                 {/* Search Box */}
@@ -61,7 +61,7 @@ const BrowsePublicLessons = () => {
                         placeholder=" Search wisdom..."
                         value={search}
                         onChange={(e) => { setSearch(e.target.value); setCurrentPage(0); }}
-                        className="px-4 py-2 pr-10 w-60 rounded-xl bg-gray-50 border 
+                        className="px-4 py-2 pr-10 w-60 rounded-xl bg-base-100 text-base-content border border-base-300 
                        focus:ring-2 focus:ring-purple-500 outline-none shadow-sm"
                     />
                 </div>
@@ -70,7 +70,7 @@ const BrowsePublicLessons = () => {
                 <select
                     value={category}
                     onChange={(e) => { setCategory(e.target.value); setCurrentPage(0); }}
-                    className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
+                    className="px-4 py-2 w-48 rounded-xl bg-base-100 text-base-content border border-base-300 shadow-sm 
                    focus:ring-2 focus:ring-purple-500 outline-none"
                 >
                     <option value=""> All Categories</option>
@@ -84,7 +84,7 @@ const BrowsePublicLessons = () => {
                 <select
                     value={tone}
                     onChange={(e) => { setTone(e.target.value); setCurrentPage(0); }}
-                    className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
+                    className="px-4 py-2 w-48 rounded-xl bg-base-100 text-base-content border border-base-300 shadow-sm 
                    focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                     <option value=""> All Tones</option>
@@ -98,7 +98,7 @@ const BrowsePublicLessons = () => {
                 <select
                     value={sort}
                     onChange={(e) => { setSort(e.target.value); setCurrentPage(0); }}
-                    className="px-4 py-2 w-48 rounded-xl bg-gray-50 border shadow-sm 
+                    className="px-4 py-2 w-48 rounded-xl bg-base-100 text-base-content border border-base-300 shadow-sm 
                    focus:ring-2 focus:ring-green-500 outline-none"
                 >
                     <option value="newest"> Newest First</option>
@@ -121,30 +121,30 @@ const BrowsePublicLessons = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4 }}
-                            className="relative bg-white rounded-xl shadow-xl p-5 border overflow-hidden"
+                            className="relative bg-base-100 rounded-xl shadow-xl p-5 border border-base-300 overflow-hidden"
                         >
                             {locked && (
-                                <div className="absolute inset-0 bg-white/70 backdrop-blur-md flex flex-col justify-center items-center">
+                                <div className="absolute inset-0 bg-base-100/70 backdrop-blur-md flex flex-col justify-center items-center">
                                     <span className="text-4xl mb-2">🔒</span>
-                                    <p className="text-gray-700 font-medium">
+                                    <p className="font-medium">
                                         Premium Lesson – Upgrade to View
                                     </p>
                                 </div>
                             )}
 
                             <h3 className="text-xl font-bold mb-2">{lesson.title}</h3>
-                            <p className="text-gray-600 text-sm">
+                            <p className="text-base-content/70 text-sm">
                                 {lesson.description.slice(0, 100)}...
                             </p>
 
                             <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                                <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
+                                <span className="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 px-2 py-1 rounded">
                                     {lesson.category}
                                 </span>
-                                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-1 rounded">
                                     {lesson.tone}
                                 </span>
-                                <span className="bg-black text-white px-2 py-1 rounded">
+                                <span className="bg-neutral text-neutral-content px-2 py-1 rounded">
                                     {lesson.accessLevel.toUpperCase()}
                                 </span>
                             </div>
@@ -156,7 +156,7 @@ const BrowsePublicLessons = () => {
                                 />
                                 <div>
                                     <p className="font-semibold">{lesson.authorName}</p>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-base-content/60">
                                         {lesson.createdAt.split("T")[0]}
                                     </p>
                                 </div>
@@ -177,15 +177,15 @@ const BrowsePublicLessons = () => {
 
            <div className="mt-14 flex flex-wrap justify-center">
   <div className="flex items-center gap-2 px-5 py-3 rounded-2xl 
-                  bg-white/70 backdrop-blur-xl border shadow-lg">
+                  bg-base-100/70 backdrop-blur-xl border border-base-300 shadow-lg">
 
     {/* Prev */}
     {currentPage > 0 && (
       <button
         onClick={() => setCurrentPage(currentPage - 1)}
         className="flex items-center gap-1 px-4 py-2 rounded-xl
-                   text-gray-700 font-medium
-                   hover:bg-gray-100 transition"
+                   font-medium
+                   hover:bg-base-200 transition"
       >
         <ArrowLeft className="w-4 h-4" />
         Prev
@@ -201,7 +201,7 @@ const BrowsePublicLessons = () => {
           ${
             i === currentPage
               ? "bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md"
-              : "text-gray-600 hover:bg-gray-100"
+              : "hover:bg-base-200"
           }`}
       >
         {i + 1}
@@ -213,8 +213,8 @@ const BrowsePublicLessons = () => {
       <button
         onClick={() => setCurrentPage(currentPage + 1)}
         className="flex items-center gap-1 px-4 py-2 rounded-xl
-                   text-gray-700 font-medium
-                   hover:bg-gray-100 transition"
+                   font-medium
+                   hover:bg-base-200 transition"
       >
         Next
         <ArrowRight className="w-4 h-4" />

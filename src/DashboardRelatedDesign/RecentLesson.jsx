@@ -18,14 +18,14 @@ const RecentLessons = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-lg p-6"
+      className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl shadow-lg p-6"
     >
       {/* Header */}
       <div className="mb-5 flex items-center justify-between">
         <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
            Recently Added Lessons
         </h3>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-base-content/60">
           {lessons.length} items
         </span>
       </div>
@@ -39,13 +39,13 @@ const RecentLessons = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.08 }}
             whileHover={{ scale: 1.02 }}
-            className="flex justify-between items-center bg-white/80 backdrop-blur border border-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all"
+            className="flex justify-between items-center bg-base-100/80 backdrop-blur border border-base-300 rounded-xl p-4 shadow-sm hover:shadow-md transition-all"
           >
             <div>
-              <p className="font-semibold text-gray-800">
+              <p className="font-semibold">
                 {lesson.title}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-base-content/60">
                 {new Date(lesson.createdAt).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",
@@ -59,8 +59,8 @@ const RecentLessons = () => {
               className={`text-xs font-medium px-3 py-1 rounded-full
                 ${
                   lesson.privacy === "public"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-orange-100 text-orange-600"
+                    ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-300"
+                    : "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300"
                 }`}
             >
               {lesson.privacy}
@@ -71,7 +71,7 @@ const RecentLessons = () => {
 
       {/* Empty State */}
       {lessons.length === 0 && (
-        <p className="text-center text-gray-400 mt-6">
+        <p className="text-center text-base-content/50 mt-6">
           No recent lessons found 
         </p>
       )}

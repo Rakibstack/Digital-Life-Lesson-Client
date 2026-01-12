@@ -23,7 +23,7 @@ const MostSavedLessons = () => {
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
         Most Saved Lessons
       </h2>
-      <p className="text-center text-gray-600 mb-10">
+      <p className="text-center text-base-content/70 mb-10">
         These lessons inspired thousands — most saved by users
       </p>
 
@@ -35,7 +35,7 @@ const MostSavedLessons = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.08 }}
-            className="group rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-2xl hover:-translate-y-2 transition-transform duration-300"
+            className="group rounded-2xl overflow-hidden bg-base-100 shadow-md hover:shadow-2xl hover:-translate-y-2 transition-transform duration-300"
           >
             {/* Image */}
             <div className="relative w-full h-44 overflow-hidden">
@@ -53,10 +53,10 @@ const MostSavedLessons = () => {
               <h3 className="font-bold text-lg mb-1 group-hover:text-[#632EE3] transition-colors duration-300">
                 {lesson.title}
               </h3>
-              <p className="text-sm text-gray-600">By {lesson.author}</p>
+              <p className="text-sm text-base-content/70">By {lesson.author}</p>
 
               <div className="flex items-center justify-between mt-3">
-                <span className="text-sm font-semibold text-gray-700">
+                <span className="text-sm font-semibold">
                   {lesson.saves} Saves
                 </span>
                 <motion.div
@@ -73,7 +73,7 @@ const MostSavedLessons = () => {
 
       {/* Empty State */}
       {lessons.length === 0 && (
-        <p className="text-center text-gray-500 mt-16 text-lg">
+        <p className="text-center text-base-content/60 mt-16 text-lg">
           No lessons available
         </p>
       )}

@@ -26,7 +26,7 @@ export default function PaymentSuccess() {
         initial={{ opacity: 0, y: 40, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white shadow-2xl rounded-2xl p-10 max-w-md text-center border border-purple-200"
+        className="bg-base-100 shadow-2xl rounded-2xl p-10 max-w-md text-center border border-purple-200"
       >
         {/* Success Icon */}
         <motion.div
@@ -39,11 +39,11 @@ export default function PaymentSuccess() {
         </motion.div>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-2 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
           Payment Successful
         </h1>
 
-        <p className="text-gray-600 leading-relaxed mb-6">
+        <p className="text-base-content/70 leading-relaxed mb-6">
           Thank you! Your premium upgrade is now active. You now have lifetime
           access to all premium features.
         </p>
@@ -77,7 +77,7 @@ export default function PaymentSuccess() {
 
           <Link
             to="/public"
-            className="w-full py-3 rounded-xl border border-gray-300 hover:bg-gray-100 font-semibold transition-all"
+            className="w-full py-3 rounded-xl border border-base-300 hover:bg-base-200 font-semibold transition-all"
           >
             Explore Lessons
           </Link>

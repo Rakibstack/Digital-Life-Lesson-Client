@@ -69,14 +69,14 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5f6fa] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
       <motion.div
         initial={{ opacity: 0, y: 30, scale: .95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: .7, ease: "easeOut" }}
         whileHover={{ scale: 1.02 }}
         className="
-          w-full max-w-md bg-white rounded-2xl p-8 
+          w-full max-w-md bg-base-100 rounded-2xl p-8 
           shadow-[0_0_70px_-10px_rgba(255,0,150,0.4),0_0_70px_-10px_rgba(0,120,255,0.4)]
           relative
         "
@@ -123,8 +123,8 @@ const Login = () => {
               type="email"
               {...register('email', { required: true })}
               placeholder="Email address"
-              className="border rounded-lg px-4 py-2 outline-none 
-              focus:ring-2 focus:ring-black duration-300"
+              className="border border-base-300 bg-base-100 rounded-lg px-4 py-2 outline-none 
+              focus:ring-2 focus:ring-primary duration-300"
             />
           </motion.div>
           {errors.email && <p className="text-red-500 mb-2">Email is required</p>}
@@ -146,8 +146,8 @@ const Login = () => {
               type={show ? 'text' : 'password'}
               {...register('password', { required: true })}
               placeholder="Password"
-              className="border rounded-lg px-4 py-2 outline-none 
-              focus:ring-2 focus:ring-black duration-300"
+              className="border border-base-300 bg-base-100 rounded-lg px-4 py-2 outline-none 
+              focus:ring-2 focus:ring-primary duration-300"
             />
             <button
               type="button"
@@ -169,14 +169,14 @@ const Login = () => {
           {/* SIGN IN */}
           <motion.button
             whileTap={{ scale: .95 }}
-            className="w-full py-2 bg-black text-white rounded-lg 
+            className="w-full py-2 bg-primary text-primary-content rounded-lg 
             text-sm font-medium"
           >
             Sign in
           </motion.button>
 
           {/* DIVIDER */}
-          <div className="my-5 border-b w-full opacity-30"></div>
+          <div className="my-5 border-b border-base-300 w-full opacity-30"></div>
 
           {/* DEMO LOGIN BUTTONS */}
           <div className="flex gap-3 mb-4">
@@ -204,8 +204,8 @@ const Login = () => {
             transition={{ delay: .7 }}
             type="button"
             onClick={HandleGoogle}
-            className="w-full py-2 border rounded-lg flex items-center 
-            justify-center gap-2 text-sm font-medium hover:bg-gray-100"
+            className="w-full py-2 border border-base-300 rounded-lg flex items-center 
+            justify-center gap-2 text-sm font-medium hover:bg-base-200"
           >
             <img
               src="https://www.svgrepo.com/show/355037/google.svg"

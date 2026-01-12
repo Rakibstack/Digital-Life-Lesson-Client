@@ -194,10 +194,10 @@ const LessonDetailsPage = () => {
 
 
             {/* Header: Title */}
-            <header className="relative rounded-2xl overflow-hidden shadow-md bg-white">
+            <header className="relative rounded-2xl overflow-hidden shadow-md bg-base-100">
                 {locked && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl text-center shadow">
+                        <div className="bg-base-100/90 backdrop-blur-md p-4 rounded-xl text-center shadow">
                             <h3 className="text-lg font-semibold">Premium Lesson</h3>
                             <p className="text-sm mt-1 mb-3">Upgrade to view full content</p>
                             <Link to='/upgrade' className="px-4 py-2 rounded-md border font-medium">Upgrade</Link>
@@ -205,10 +205,10 @@ const LessonDetailsPage = () => {
                     </div>
                 )}
 
-                <div className={`h-48 md:h-56 flex items-center justify-center bg-gradient-to-r from-slate-50 to-white ${locked ? 'filter blur-sm' : ''}`}>
+                <div className={`h-48 md:h-56 flex items-center justify-center bg-gradient-to-r from-base-200 to-base-100 ${locked ? 'filter blur-sm' : ''}`}>
                     <div className="text-center">
                         <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent ">{lesson.title}</h1>
-                        <p className="text-sm text-slate-500 mt-2">{lesson.category} • {lesson.tone}</p>
+                        <p className="text-sm text-base-content/60 mt-2">{lesson.category} • {lesson.tone}</p>
                     </div>
                 </div>
 
@@ -217,16 +217,16 @@ const LessonDetailsPage = () => {
             {/* Meta bar + Author + Stats */}
             <div className="flex flex-col md:flex-row md:items-start md:space-x-6">
                 {/* Left: Content column */}
-                <div className="flex-1 bg-white rounded-2xl shadow p-6 relative">
+                <div className="flex-1 bg-base-100 rounded-2xl shadow p-6 relative">
 
                     {/* Meta */}
                     <div className="flex items-center justify-between mb-4">
-                        <div className="text-sm text-slate-500">
-                            <div>Created: <span className="font-medium text-slate-700">{formatDate(author.createAt)}</span></div>
-                            <div>Updated: <span className="font-medium text-slate-700">{formatDate(lesson.updatedAt)}</span></div>
+                        <div className="text-sm text-base-content/60">
+                            <div>Created: <span className="font-medium text-base-content/80">{formatDate(author.createAt)}</span></div>
+                            <div>Updated: <span className="font-medium text-base-content/80">{formatDate(lesson.updatedAt)}</span></div>
                             <div>Visibility: Public</div>
                         </div>
-                        <div className="text-sm text-slate-500 text-right">
+                        <div className="text-sm text-base-content/60 text-right">
 
                             <div>Views: <span className="font-medium">{Number(views).toLocaleString()}</span></div>
                         </div>
@@ -238,7 +238,7 @@ const LessonDetailsPage = () => {
                         <motion.button
                             whileTap={{ scale: 0.95 }}
                             onClick={onLike}
-                            className={`px-3 py-2 rounded-md flex items-center gap-2 border ${likedByMe ? 'bg-red-50 border-red-200' : 'bg-white'}`}
+                            className={`px-3 py-2 rounded-md flex items-center gap-2 border border-base-300 ${likedByMe ? 'bg-red-50 dark:bg-red-900/20 border-red-200' : 'bg-base-100'}`}
                             aria-pressed={likedByMe}
                             aria-label="Like lesson"
                         >
@@ -249,7 +249,7 @@ const LessonDetailsPage = () => {
                         <motion.button
                             whileTap={{ scale: 0.95 }}
                             onClick={onFavorite}
-                            className={`px-3 py-2 rounded-md flex items-center gap-2 border ${favoritedByMe ? 'bg-yellow-50 border-yellow-200' : 'bg-white'}`}
+                            className={`px-3 py-2 rounded-md flex items-center gap-2 border border-base-300 ${favoritedByMe ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200' : 'bg-base-100'}`}
                             aria-pressed={favoritedByMe}
                             aria-label="Save to favorites"
                         >
@@ -275,13 +275,13 @@ const LessonDetailsPage = () => {
                         <motion.button whileTap={{ scale: 0.95 }} onClick={() => {
                             setIsOpen(true)
                             lesson._id
-                        }} className="ml-auto px-3 py-2 rounded-md text-sm border bg-white text-rose-600" aria-label="Report lesson">Report</motion.button>
+                        }} className="ml-auto px-3 py-2 rounded-md text-sm border border-base-300 bg-base-100 text-rose-600" aria-label="Report lesson">Report</motion.button>
                     </div>
                     {/* Modal */}
                     {isOpen && (
                         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
                             <motion.div
-                                className="bg-white p-4 rounded-md w-80"
+                                className="bg-base-100 p-4 rounded-md w-80"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.8, opacity: 0 }}
@@ -289,7 +289,7 @@ const LessonDetailsPage = () => {
                                 <h3 className="text-lg font-semibold mb-2">Report Lesson</h3>
 
                                 <select
-                                    className="w-full p-2 border rounded mb-4"
+                                    className="w-full p-2 border border-base-300 rounded mb-4 bg-base-100"
                                     value={reason}
                                     onChange={e => setReason(e.target.value)}
                                 >
@@ -300,7 +300,7 @@ const LessonDetailsPage = () => {
 
                                 <div className="flex justify-end gap-2">
                                     <button
-                                        className="px-3 py-1 rounded-md border"
+                                        className="px-3 py-1 rounded-md border border-base-300"
                                         onClick={() => setIsOpen(false)}
                                     >
                                         Cancel
@@ -332,7 +332,7 @@ const LessonDetailsPage = () => {
 
                                 <div className="flex-1">
                                     <textarea
-                                        className="w-full p-3 rounded-md border"
+                                        className="w-full p-3 rounded-md border border-base-300 bg-base-100"
                                         placeholder={user ? 'Write a comment...' : 'Please log in to comment'}
                                         disabled={!user}
                                         value={commentText}
@@ -343,7 +343,7 @@ const LessonDetailsPage = () => {
                                         <button
                                             onClick={handlePostComment}
                                             disabled={!user}
-                                            className="px-4 py-2 rounded-md bg-slate-800 text-white text-sm"
+                                            className="px-4 py-2 rounded-md bg-primary text-primary-content text-sm"
                                         >
                                             Post Comment
                                         </button>
@@ -354,7 +354,7 @@ const LessonDetailsPage = () => {
                             {/* Comments List */}
                             <div className="space-y-2">
                                 {comments.map(comment => (
-                                    <div key={comment._id} className="bg-slate-50 p-3 rounded-lg">
+                                    <div key={comment._id} className="bg-base-200 p-3 rounded-lg">
                                         <div className="flex items-center gap-2 mb-1">
                                             <img
                                                 src={comment.userPhoto}
@@ -364,7 +364,7 @@ const LessonDetailsPage = () => {
                                                 {comment.userName}
                                             </div>
                                         </div>
-                                        <div className="text-sm text-slate-700">
+                                        <div className="text-sm text-base-content/80">
                                             {comment.text}
                                         </div>
                                     </div>
@@ -381,38 +381,38 @@ const LessonDetailsPage = () => {
                 <aside className="w-full md:w-80 mt-6 md:mt-0">
                     <div className="sticky top-6 space-y-4">
                         {/* Author card */}
-                        <div className="bg-white rounded-2xl shadow p-4 flex items-center gap-3">
+                        <div className="bg-base-100 rounded-2xl shadow p-4 flex items-center gap-3">
                             <img src={author.photo} className="w-14 h-14 rounded-full object-cover" />
                             <div>
                                 <div className="font-semibold">{author.name}</div>
-                                <div className="text-sm text-slate-500">{totalLesson} lessons</div>
+                                <div className="text-sm text-base-content/60">{totalLesson} lessons</div>
                                 <Link to={`/author/${author.email}`} className="mt-2 text-sm underline">View all lessons</Link>
                             </div>
                         </div>
 
                         Quick Stats
-                        <div className="bg-white rounded-2xl shadow p-4">
-                            <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Likes</span><span className="font-medium">{Number(likesCount).toLocaleString()}</span></div>
-                            <div className="flex items-center justify-between text-sm text-slate-600 mb-2"><span>Favorites</span><span className="font-medium">{Number(favoritesCount).toLocaleString()}</span></div>
-                            <div className="flex items-center justify-between text-sm text-slate-600"><span>Views</span><span className="font-medium">{Number(views).toLocaleString()}</span></div>
+                        <div className="bg-base-100 rounded-2xl shadow p-4">
+                            <div className="flex items-center justify-between text-sm text-base-content/70 mb-2"><span>Likes</span><span className="font-medium">{Number(likesCount).toLocaleString()}</span></div>
+                            <div className="flex items-center justify-between text-sm text-base-content/70 mb-2"><span>Favorites</span><span className="font-medium">{Number(favoritesCount).toLocaleString()}</span></div>
+                            <div className="flex items-center justify-between text-sm text-base-content/70"><span>Views</span><span className="font-medium">{Number(views).toLocaleString()}</span></div>
                         </div>
 
                         {/* Recommendations (static placeholders) */}
-                        <div className="bg-white rounded-2xl shadow p-4">
+                        <div className="bg-base-100 rounded-2xl shadow p-4">
                             <h4 className="font-semibold mb-3">Related Lessons</h4>
                             <div className="space-y-3">
                                 {(showAll ? relatedLessons : relatedLessons.slice(0, 3)).map((rel) => (
                                     <div key={rel._id} className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-slate-100 rounded-md flex-none" />
+                                        <div className="w-12 h-12 bg-base-200 rounded-md flex-none" />
                                         <div>
                                             <div className="text-sm font-medium">{short(rel.title, 48)}</div>
-                                            <div className="text-xs text-slate-500">{rel.category} • {rel.tone}</div>
+                                            <div className="text-xs text-base-content/60">{rel.category} • {rel.tone}</div>
                                         </div>
                                     </div>
                                 ))}
                                 {relatedLessons.length > 3 && (
                                     <button
-                                        className="mt-3 w-full text-sm py-2 rounded-md border"
+                                        className="mt-3 w-full text-sm py-2 rounded-md border border-base-300"
                                         onClick={() => setShowAll(prev => !prev)}
                                     >
                                         {showAll ? 'Show less' : 'Show more'}

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useAuth from '../../Hooks/useAuth';
 import useUser from '../../Hooks/useUser';
 import DynamicLoading from '../Loading/Loading';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 
 const Navber = () => {
   const { user, logout, loading } = useAuth();
@@ -110,7 +111,8 @@ const Navber = () => {
       </div>
 
       {/* RIGHT */}
-      <div className="navbar-end flex items-center gap-4">
+      <div className="navbar-end flex items-center gap-2">
+        <ThemeToggle />
         {!user ? (
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -142,20 +144,20 @@ const Navber = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-3 w-56 bg-white border shadow-lg rounded-lg overflow-hidden z-50"
+                  className="absolute right-0 mt-3 w-56 bg-base-100 border border-base-300 shadow-lg rounded-lg overflow-hidden z-50"
                 >
-                  <div className="px-4 py-2 border-b font-semibold">
+                  <div className="px-4 py-2 border-b border-base-300 font-semibold">
                     {user.displayName}
                   </div>
                   <Link
                     to="/dashboard/myprofile"
-                    className="block px-4 py-2 hover:bg-gray-100 transition"
+                    className="block px-4 py-2 hover:bg-base-200 transition"
                   >
                     Profile
                   </Link>
                   <Link
                     to="/dashboard"
-                    className="block px-4 py-2 hover:bg-gray-100 transition"
+                    className="block px-4 py-2 hover:bg-base-200 transition"
                   >
                     Dashboard
                   </Link>
@@ -164,7 +166,7 @@ const Navber = () => {
                       logout();
                       setDropdownOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 transition"
+                    className="w-full text-left px-4 py-2 hover:bg-base-200 transition"
                   >
                     Log out
                   </button>

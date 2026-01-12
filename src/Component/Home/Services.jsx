@@ -35,7 +35,7 @@ const PremiumServiceSection = () => {
       <h2 className="text-4xl sm:text-5xl font-extrabold text-center mb-4">
         Our <span className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">Services</span>
       </h2>
-      <p className="text-center text-gray-400 mb-16 max-w-2xl mx-auto">
+      <p className="text-center text-base-content/60 mb-16 max-w-2xl mx-auto">
         Explore the powerful features of Digital Life Lesson that help you grow and learn effectively.
       </p>
 

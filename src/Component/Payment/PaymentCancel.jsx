@@ -9,7 +9,7 @@ export default function PaymentCancel() {
         initial={{ opacity: 0, y: 40, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white shadow-2xl rounded-2xl p-10 max-w-md text-center border border-red-200"
+        className="bg-base-100 shadow-2xl rounded-2xl p-10 max-w-md text-center border border-red-200"
       >
         {/* Cancel Icon */}
         <motion.div
@@ -22,11 +22,11 @@ export default function PaymentCancel() {
         </motion.div>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-2 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
           Payment Canceled
         </h1>
 
-        <p className="text-gray-600 leading-relaxed mb-6">
+        <p className="text-base-content/70 leading-relaxed mb-6">
           Your payment was not completed. If this was a mistake, you can try the
           checkout process again anytime.
         </p>
@@ -60,7 +60,7 @@ export default function PaymentCancel() {
 
           <Link
             to="/"
-            className="w-full py-3 rounded-xl border border-gray-300 hover:bg-gray-100 font-semibold transition-all"
+            className="w-full py-3 rounded-xl border border-base-300 hover:bg-base-200 font-semibold transition-all"
           >
             Back to Home
           </Link>

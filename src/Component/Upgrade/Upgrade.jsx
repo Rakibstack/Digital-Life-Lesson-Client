@@ -67,7 +67,7 @@ const Upgrade = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 py-16 px-4 flex items-center justify-center">
+        <div className="min-h-screen bg-base-200 py-16 px-4 flex items-center justify-center">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -75,29 +75,29 @@ const Upgrade = () => {
                 className="max-w-4xl w-full mx-auto"
             >
                 <h1 className="text-5xl font-bold text-center  bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-4">Pricing</h1>
-                <p className="text-center text-gray-700 mb-10">
+                <p className="text-center text-base-content/70 mb-10">
                     Choose the plan that fits your learning journey.
                 </p>
 
 
-                <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div className="bg-base-100 rounded-2xl shadow-lg overflow-hidden">
                     <table className="w-full">
-                        <thead className="bg-gray-100">
+                        <thead className="bg-base-200">
                             <tr>
-                                <th className="text-left p-4 text-gray-700 text-lg">Features</th>
-                                <th className="text-center p-4 text-gray-700 text-lg">Free</th>
-                                <th className="text-center p-4 text-gray-700 text-lg">Premium</th>
+                                <th className="text-left p-4 text-lg">Features</th>
+                                <th className="text-center p-4 text-lg">Free</th>
+                                <th className="text-center p-4 text-lg">Premium</th>
                             </tr>
                         </thead>
                         <tbody>
                             {features.map((item, index) => (
                                 <tr
                                     key={index}
-                                    className={`border-b ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                                    className={`border-b border-base-300 ${index % 2 === 0 ? "bg-base-100" : "bg-base-200"
                                         }`}
                                 >
-                                    <td className="p-4 font-medium text-gray-800">{item.feature}</td>
-                                    <td className="p-4 text-center text-gray-600">{item.free}</td>
+                                    <td className="p-4 font-medium">{item.feature}</td>
+                                    <td className="p-4 text-center text-base-content/70">{item.free}</td>
                                     <td className="p-4 text-center font-semibold text-green-600 flex items-center justify-center gap-2">
                                         <Check size={18} /> {item.premium}
                                     </td>
@@ -109,7 +109,7 @@ const Upgrade = () => {
 
 
                 <div className="text-center mt-10">
-                    <p className="text-gray-700 text-xl font-semibold mb-3">
+                    <p className="text-xl font-semibold mb-3">
                         Premium – ৳1500 (One‑time Payment, Lifetime Access)
                     </p>
 

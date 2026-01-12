@@ -38,7 +38,7 @@ const AboutSection = () => {
         <h2 className="text-4xl sm:text-5xl font-extrabold leading-snug">
           About <span className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">Digital Life Lesson</span>
         </h2>
-        <p className="text-gray-600 text-lg sm:text-xl">
+        <p className="text-base-content/70 text-lg sm:text-xl">
           Digital Life Lesson is your companion for personal growth and learning. Our mission is to provide carefully curated life lessons, practical advice, and inspiring content to help you live a more meaningful and successful life.
         </p>
 
@@ -46,7 +46,7 @@ const AboutSection = () => {
           {features.map((feature, idx) => (
             <motion.div
               key={idx}
-              className="flex items-start gap-4 bg-white/10 p-4 rounded-xl shadow-md hover:shadow-lg transition"
+              className="flex items-start gap-4 bg-base-100 p-4 rounded-xl shadow-md hover:shadow-lg transition border border-base-300"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -54,8 +54,8 @@ const AboutSection = () => {
             >
               <div className="text-3xl">{feature.icon}</div>
               <div>
-                <h4 className="font-semibold text-black/50">{feature.title}</h4>
-                <p className="text-gray-400 text-sm">{feature.description}</p>
+                <h4 className="font-semibold">{feature.title}</h4>
+                <p className="text-base-content/60 text-sm">{feature.description}</p>
               </div>
             </motion.div>
           ))}

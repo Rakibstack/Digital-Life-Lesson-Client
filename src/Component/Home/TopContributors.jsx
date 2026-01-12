@@ -31,7 +31,7 @@ const TopContributors = () => {
                 Top <span className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-transparent bg-clip-text">Contributors</span> of the Week
             </h2>
 
-            <p className="text-center text-gray-600 max-w-xl mx-auto mb-12">
+            <p className="text-center text-base-content/70 max-w-xl mx-auto mb-12">
                 These amazing people shared inspiring life lessons for others to grow.
                 Learn from them, follow them — maybe you will be next on the leaderboard!
             </p>
@@ -44,7 +44,7 @@ const TopContributors = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: index * 0.06 }}
-                        className="p-6 rounded-xl shadow-md bg-white hover:shadow-xl transition transform hover:-translate-y-2 text-center border"
+                        className="p-6 rounded-xl shadow-md bg-base-100 hover:shadow-xl transition transform hover:-translate-y-2 text-center border border-base-300"
                     >
                         <motion.img
                             src={user.image}
@@ -54,7 +54,7 @@ const TopContributors = () => {
                         />
                         <div className="mt-4 text-2xl">{user.rank}</div>
                         <h3 className="text-xl font-semibold mt-1">{user.name}</h3>
-                        <p className="text-gray-600 text-sm">{user.lessons} Lessons Shared</p>
+                        <p className="text-base-content/70 text-sm">{user.lessons} Lessons Shared</p>
 
                         {/* <motion.button
                             whileTap={{ scale: 0.95 }}

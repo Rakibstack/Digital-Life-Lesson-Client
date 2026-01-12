@@ -45,7 +45,7 @@ const MyFavorites = () => {
   if (isLoading) return <DynamicLoading />;
 
   return (
-    <div className="p-6 space-y-8 min-h-screen bg-gray-50">
+    <div className="p-6 space-y-8 min-h-screen bg-base-200">
       <title>My Favorite Lessons</title>
 
       {/* Header */}
@@ -65,11 +65,11 @@ const MyFavorites = () => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-wrap gap-4 bg-white p-4 rounded-2xl shadow-md"
+        className="flex flex-wrap gap-4 bg-base-100 p-4 rounded-2xl shadow-md"
       >
         <select
           onChange={(e) => setCategory(e.target.value)}
-          className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
+          className="px-4 py-2 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-pink-400 outline-none"
         >
           <option value="">All Categories</option>
           <option value="personal growth">Personal Growth</option>
@@ -81,7 +81,7 @@ const MyFavorites = () => {
 
         <select
           onChange={(e) => setTone(e.target.value)}
-          className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+          className="px-4 py-2 border border-base-300 bg-base-100 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
         >
           <option value="">All Tones</option>
           <option value="motivational">Motivational</option>
@@ -92,9 +92,9 @@ const MyFavorites = () => {
       </motion.div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl bg-white shadow-xl border">
+      <div className="overflow-x-auto rounded-2xl bg-base-100 shadow-xl border border-base-300">
         <table className="table w-full">
-          <thead className="bg-gradient-to-r from-pink-50 to-rose-50">
+          <thead className="bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20">
             <tr>
               <th>Title</th>
               <th>Category</th>
@@ -110,19 +110,19 @@ const MyFavorites = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.01, backgroundColor: "rgba(255,192,203,0.2)" }}
-                className="hover:shadow-md rounded-xl transition-all"
+                whileHover={{ scale: 1.01 }}
+                className="hover:bg-pink-50 dark:hover:bg-pink-900/10 rounded-xl transition-all"
               >
                 <td className="font-medium">{fav.title}</td>
 
                 <td>
-                  <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600">
+                  <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
                     {fav.category}
                   </span>
                 </td>
 
                 <td>
-                  <span className="px-3 py-1 text-xs rounded-full bg-purple-100 text-purple-600">
+                  <span className="px-3 py-1 text-xs rounded-full bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-300">
                     {fav.tone}
                   </span>
                 </td>
@@ -130,7 +130,7 @@ const MyFavorites = () => {
                 <td className="flex gap-2 justify-center">
                   <Link
                     to={`/lessons/${fav.lessonId}`}
-                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:scale-110 transition-transform"
+                    className="p-2 rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-300 hover:scale-110 transition-transform"
                     title="View"
                   >
                     <Eye size={16} />
@@ -138,7 +138,7 @@ const MyFavorites = () => {
 
                   <button
                     onClick={() => handleRemove(fav._id)}
-                    className="p-2 rounded-lg bg-red-100 text-red-600 hover:scale-110 transition-transform"
+                    className="p-2 rounded-lg bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-300 hover:scale-110 transition-transform"
                     title="Remove"
                   >
                     <Trash2 size={16} />
@@ -150,7 +150,7 @@ const MyFavorites = () => {
         </table>
 
         {favorites.length === 0 && (
-          <div className="text-center py-16 text-gray-400 flex flex-col items-center gap-3">
+          <div className="text-center py-16 text-base-content/50 flex flex-col items-center gap-3">
             <span className="text-6xl animate-bounce">⭐</span>
             <p>You haven't saved any lessons yet</p>
           </div>

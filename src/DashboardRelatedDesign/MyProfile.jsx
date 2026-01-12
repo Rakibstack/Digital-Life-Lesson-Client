@@ -63,7 +63,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50">
+    <div className="p-6 min-h-screen bg-base-200">
       <title>My Profile</title>
 
       {/* ================= PROFILE CARD ================= */}
@@ -104,7 +104,7 @@ const Profile = () => {
           onClick={() => modalRef.current.showModal()}
           whileTap={{ scale: 0.95 }}
           className="mt-6 w-full py-2 rounded-xl font-semibold 
-          bg-white text-indigo-600 hover:bg-gray-100 transition"
+          bg-white text-indigo-600 hover:bg-gray-50 transition"
         >
            Update Profile
         </motion.button>
@@ -184,10 +184,10 @@ const Profile = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.03 }}
-            className="bg-white rounded-2xl shadow-lg p-5 border"
+            className="bg-base-100 rounded-2xl shadow-lg p-5 border border-base-300"
           >
             <h3 className="text-xl font-bold mb-2">{lesson.title}</h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-base-content/70 text-sm">
               {lesson.description.slice(0, 100)}...
             </p>
 
@@ -208,7 +208,7 @@ const Profile = () => {
               />
               <div>
                 <p className="font-semibold">{lesson.authorName}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-base-content/60">
                   {lesson.createdAt.split("T")[0]}
                 </p>
               </div>
