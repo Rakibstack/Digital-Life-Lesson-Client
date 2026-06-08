@@ -27,7 +27,6 @@ const useAxiosSecure = () => {
        if(status === 401 || status === 403){
         logout()
          return Promise.reject('unauthorized Access')
-
        }
        return Promise.reject(error)
     })

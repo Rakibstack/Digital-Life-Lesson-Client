@@ -68,7 +68,7 @@ const Navber = () => {
   );
 
   return (
-    <div className="navbar sticky top-0 z-50 bg-base-100 px-6 min-h-[72px] border-b">
+    <div className="navbar  sticky top-0 z-50 bg-base-100 px-6 min-h-[72px] border-b">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,7 +97,7 @@ const Navber = () => {
         </div>
 
         {/* LOGO */}
-        <h2 className="font-extrabold text-2xl sm:text-3xl tracking-tight">
+        <h2 className="font-extrabold text-2xl sm:text-3xl ml-15 tracking-tight">
           Digital Life{' '}
           <span className="bg-gradient-to-r from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
             Lesson
@@ -111,7 +111,7 @@ const Navber = () => {
       </div>
 
       {/* RIGHT */}
-      <div className="navbar-end flex items-center gap-2">
+      <div className="navbar-end flex items-center gap-2 mr-5">
         <ThemeToggle />
         {!user ? (
           <motion.div

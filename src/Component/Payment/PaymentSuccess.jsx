@@ -18,8 +18,6 @@ export default function PaymentSuccess() {
     }
   },[sessionId,axiosSecure])
   
-
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600/10 to-blue-500/10 p-6">
       <motion.div

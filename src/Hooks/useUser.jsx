@@ -20,6 +20,7 @@ const useUser = () => {
 
 
     return {role,isPremium,name,email,photo,isLoading};
+    
 };
 
 export default useUser;
